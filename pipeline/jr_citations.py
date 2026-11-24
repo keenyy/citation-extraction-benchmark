@@ -1,5 +1,41 @@
                        
+"""Citation counting.
 
+Counts the distinct authorities a judgment relies on, by jurisdiction.
+
+WHY THIS EXISTS. A field audit on 17 August 2026 read fourteen judgments by hand and compared
+them with the stored Master values. The citation columns were wrong on most of them, in both
+directions: 0 of 8 correct on the High Court of Australia, 4 of 8 on New Zealand, 6 of 8 on
+Canada. One Canadian judgment recorded 7 citations where a reader counted about 38.
+
+The faults, and where each is handled here:
+
+  F1  old comma form   '(1897) 2 Ch., 12'                      -> _CITE_PAREN_COMMA
+  F2  old English      Ch, App Cas, LT, L.J.K.B., Co Rep, TC   -> jr_reporters
+  F3  provincial CAN   A.R., C.C.C., O.A.C., Man. R., A.P.R.   -> jr_reporters
+  F4  unreported       'HC Auckland CIV-2010-404-3298'         -> _CITE_UNREPORTED
+  F5  parallel/repeat  one case counted two or three times     -> the three dedup levels below
+  F6  false positives  a jurisdiction with no authority in it  -> jr_reporters blocklists
+
+DEDUPLICATION. Three levels, and the order matters.
+
+  L0  span overlap.    Two patterns matching the same characters are one citation.
+                       '(1971) 45 CLR 22' matches both the general parenthetical pattern and
+                       the CLR-specific one.
+  L1  exact citation.  The same authority cited again anywhere in the judgment counts once.
+  L2  parallel form.   One decision given two references side by side is one authority:
+                       '[2025] NZCA 31, [2025] 2 NZLR 308'.
+
+⚠️ THE BUG THIS MODULE EXISTS TO FIX. The previous implementation skipped a repeated citation
+without recording its character span. A narrower pattern then matched inside that unrecorded
+span, found no overlap, and counted it again. So repeats were not suppressed at all -- they were
+re-counted through a different pattern. Measured on Federal Commissioner of Taxation v York
+Motors, where a reader counted 6 UK and 6 AU authorities, the old engine returned 21 and 13,
+because '(1928) 41 CLR 540' appears four times and each repeat added one.
+
+The rule that prevents it: A SPAN IS RECORDED WHENEVER IT IS CONSUMED, including when the match
+is discarded as a duplicate. See _Counter.consume().
+"""
 import re
 
                                                                            
@@ -132,7 +168,7 @@ _CITE_MORISON = re.compile(
                                                                                        
                           
 def _pattern_applies(name, citing_court):
-    
+    """False where a pattern is confined to courts that this one is not."""
     if name.startswith("cd_hk"):
         return citing_court == "HKCFA"
     if name == "unreported_nzold":                                                         
@@ -674,7 +710,7 @@ _CITE_UNREPORTED_BEFORE = re.compile(
                                                                                                     
                                                                                                    
                                                                                                   
-                                                                                                          
+                                                                                                     
                                                                                                 
                                                                                                 
                                                                                                 
@@ -801,7 +837,7 @@ def _hk_ids(name, groups):
 
 
 class _HKContext:
-    
+    """Per-call docket aliases and header identity; no cross-judgment mutable state."""
     def __init__(self, text, header=None):
         self.header = header if header is not None else (text.split('CORE JUDGMENT',1)[0]
                       if 'HEADNOTES' in text else '')
@@ -914,7 +950,13 @@ def _hk_mask_parallel(text):
 
 
 def _hk_finish(counter, text, hk):
-    
+    """Resolve a FROM docket to its explicitly reported decision below.
+
+    Require a procedural Court of Appeal paragraph and a Hong Kong report,
+    following an explicit footnote callout when the report is in a footnote.
+    A judgment delivered in parts may still have several reported decisions;
+    only the first is the alias of the otherwise undifferentiated caption.
+    """
     result = counter.finish(text)
                                                                                                          
                                                                                                        
@@ -964,13 +1006,13 @@ def _hk_finish(counter, text, hk):
             report = candidates[0]
             counter._alias(report[3],docket[3])
             result.remove(docket)
-                                                                                                                 
+                                                                                                                
                                                                                                              
                                                                                                                    
                                                                                                                  
                                                                                                               
                                                                                                                     
-    if _HK_BARE_OWN_ON:
+    if _HK_BARE_OWN_ON and not R108_ON:                                                  
         for r in list(result):
             k = r[3]
             if not (k[1] == 'HKCFA' or (k[1] == 'DOCKET' and str(k[3]).startswith(_HK_OWN_COURT))):
@@ -999,6 +1041,57 @@ def _hk_finish(counter, text, hk):
 
 
 _HK_BARE_OWN_ON = __import__("os").environ.get("JR_HK_BARE_OWN", "1") != "0"
+                                                                                                                 
+                                                                                                                    
+                                                                                                                 
+                                                                                                                    
+                                                      
+R108_ON = __import__("os").environ.get("JR_R108", "1") != "0"
+                                                                                                                
+                                                                                                                  
+                                                                                                                 
+                                                                                                                      
+                                                                                                                    
+                                                                                                                     
+                                                                                                                     
+                                                                  
+R108_BARE_ON = __import__("os").environ.get("JR_BARE", "1") != "0"
+_BARE_TI = None
+
+
+def _bare_title_index():
+    global _BARE_TI
+    if _BARE_TI is None:
+        import os as _o, sqlite3 as _sq
+        import jr_barenames as _bn
+        db = _o.environ.get("JR_TITLE_DB") or _o.path.join(_o.path.dirname(_o.path.dirname(_o.path.dirname(
+            _o.path.abspath(__file__)))), "Master_5.5.db")
+        jur = {"HCA": "AU", "HKCFA": "HK", "HL 1709-1995": "UK", "HL 1996-2009": "UK", "UKSC": "UK", "MYFC": "MY",
+               "NZSC": "NZ", "SCC": "CAN", "SGCA": "SG", "SGHC": "SG", "USSC": "USA"}
+        pairs = []
+        if _o.path.exists(db):
+            con = _sq.connect("file:" + db + "?mode=ro", uri=True)
+            for sh, t, i in con.execute("select j.sheet, f.value, j.id from judgment j join judgment_field f "
+                                        "on f.id = j.id and f.column = 'Case'"):
+                y = i.split("-")[1] if len(i.split("-")) > 2 else ""
+                pairs.append((t, jur.get(sh, "OTHER"), int(y) if y.isdigit() else None))
+            con.close()
+        _BARE_TI = _bn.TitleIndex(pairs)
+    return _BARE_TI
+
+
+def _bare_names(text, spans, own_name, own_citation):
+    """[(start, end, jurisdiction, display)] for the bare case names in `text` (R108b)."""
+    if not R108_BARE_ON or own_name is None:
+        return []
+    import jr_barenames as _bn
+    m = re.search(r"(?<!\d)(1[5-9]\d\d|20\d\d)(?!\d)", str(own_citation or "") + " " + str(own_name or ""))
+    yr = int(m.group(1)) if m else None
+    ti = _bare_title_index()
+    out = []
+    for disp, key, at in _bn.bare_names(text, spans, own_name=own_name):
+        out.append((at, at + len(disp), ti.jurisdiction(key, yr), disp, key))
+    return out
 _HK_OWN_COURT = ('FAMC', 'FAMV', 'FAMP', 'FACV', 'FACC')
 _HK_LEAVE_IN = re.compile(r'\bleave to appeal[ \t]+in[ \t]*$', re.I)
 _HK_LEAVE_CALL = re.compile(r'\bleave\b|\bAppeal Committee\b', re.I)
@@ -1268,7 +1361,7 @@ _PIN_RANGE = re.compile(
 
 
 def _article_title_before(text, start):
-    
+    """True where the citation is preceded by a quoted article title."""
     before = text[max(0, start - 220):start]
     if not _TITLE_BEFORE.search(before):
         return False
@@ -1288,7 +1381,7 @@ def _article_title_before(text, start):
 
 
 def _pinpoint_before(text, start, vol, rep, num=None):
-    
+    """`_pinpoint_cue`, and where that finds nothing, 3 for a page reference by its FORM alone."""
     r = _pinpoint_cue(text, start, vol, rep, num)
     if r:
         return r
@@ -1299,7 +1392,11 @@ def _pinpoint_before(text, start, vol, rep, num=None):
 
 
 def _pinpoint_cue(text, start, vol, rep, num=None):
-    
+    """True where the words in front of a citation mark it as a page in one already given.
+
+    (14 Oct 2026) Returns 2, not True, where the words say so OUTRIGHT (`_PIN_HARD`): such a
+    reference is never an authority of its own, even where its volume is cited nowhere else
+    (`consume` counts an ordinary pinpoint whose volume has not been seen)."""
     before = text[max(0, start - 40):start]
                                                                                                   
                                                                                                   
@@ -1440,7 +1537,7 @@ _OWN_STEP = re.compile(
 
 
 def _file_numbers(text):
-    
+    """Yield (start, end, key) for each file number that discloses a DECISION."""
     freq, raw = {}, []
     for pat in _FILENUM_ALL:
         for m in pat.finditer(text):
@@ -1585,7 +1682,7 @@ def _residue_word_ok(w):
 
 
 def _residue_is_parallel(s):
-    
+    """True when the residue between two citations is only punctuation, digits and at/p/pp."""
     if s is None or len(s) > _RESIDUE_MAX:
         return False
                                                                                        
@@ -1673,7 +1770,7 @@ _COMMA_PAGINATED = {"ATC", "BPR", "CCH", "ATR", "AITR", "ATPR", "ACLC"}
 
 
 def _page_of(reporter_key, number):
-    
+    """The page, with a comma read as a separator only where the series warrants it."""
     num = str(number or "")
     if "," in num and str(reporter_key or "") not in _COMMA_PAGINATED:
         num = num.split(",")[0]
@@ -1681,7 +1778,8 @@ def _page_of(reporter_key, number):
 
 
 def _norm_key(year, reporter, volume, number):
-    
+    """L1 key. Dots and spacing are cosmetic; the volume is NOT --
+    [1998] 1 WLR 100 and [1998] 2 WLR 100 are different cases."""
                                                                                          
                                                                                         
                                                                                      
@@ -1732,7 +1830,7 @@ _PERIODICAL = re.compile(r"(?i)JOURNAL|REVIEW|QUARTERLY")
 
 
 def _is_plausible_authority(key):
-    
+    """False for a citation no law report could carry."""
     try:
         year, rep, _vol, _num = key
     except (TypeError, ValueError):
@@ -1748,7 +1846,7 @@ def _is_plausible_authority(key):
 
 
 class _Counter:
-    
+    """Collects citations with the three dedup levels applied."""
 
     def __init__(self):
         self.spans = []                                                             
@@ -1785,11 +1883,28 @@ class _Counter:
         return any(start < e and end > s for s, e in self.spans)
 
     def bridge(self, start, end):
-        
+        """Record a span that is NOT an authority but must not leave a hole.
+
+        A database accession number sits between a case citation and its parallel.
+        It is not counted, but the parallel test cuts consumed spans out of the gap
+        before asking whether the remainder is punctuation, so the span has to be on
+        the record even though the authority is not.
+        """
         self.spans.append((start, end))
 
     def consume(self, start, end, juri, key, form, pinpoint=False):
-        
+        """Record the span whatever happens to the match.
+
+        Recording on the discard path is the whole point. Skipping a duplicate without
+        recording its span leaves a hole that a narrower pattern matches inside, which is
+        how repeats were silently re-counted.
+
+        L1b -- A PINPOINT IS NOT AN AUTHORITY. '(1964) 376 US, at p 228' is a page reference
+        back to '(1964) 376 US 225', already counted. The two differ in the number, so the L1
+        key does not catch it, and L2b only merges the pair when they happen to fall next to
+        each other -- yet a judge typically pinpoints a case pages after first citing it. In
+        Parkdale that left the United States column reading 8 where the judgment cites 5.
+        So a citation written as a pinpoint counts only if its volume has not been seen."""
         if self.overlaps(start, end):
             return False
         self.spans.append((start, end))                                                
@@ -1834,7 +1949,10 @@ class _Counter:
         return True
 
     def _lr_alias(self, key):
-        
+        """F18: the same citation as it was read before 14 Oct 2026, `(1867) LR 2`.
+        ⚠ One case only may answer to that old key: `(1867) L.R. 2 Q.B. 580` and `(1867) L.R. 2
+        H.L. 149` both read `(1867) LR 2`, and sharing it made the scorer join the two cases
+        (measured). The first printed keeps it, as the old reading did."""
                                                                                              
                                                                                                 
                                                                                                 
@@ -1842,7 +1960,7 @@ class _Counter:
         self._lr_legacy.setdefault(legacy, key)
 
     def _alias(self, survivor, dropped):
-        
+        """Record that `dropped` is another name for `survivor`."""
                                                                                     
                                                                                     
                                                                        
@@ -1868,7 +1986,9 @@ class _Counter:
                 self._merged_into[k] = survivor
 
     def _fold(self, into, key):
-        
+        """Make `key` another name of `into` -- unless `into` already answers to `key` (it was
+        merged INTO it as a parallel: `Budak v Turkey (unreported), 7 September 2004 (App No
+        57345/00)`), where dropping `key` would lose the authority altogether (measured: 3)."""
         surv, seen = into, set()
         while surv in self._merged_into and surv not in seen:
             seen.add(surv)
@@ -1879,7 +1999,7 @@ class _Counter:
         return True
 
     def _residue(self, text, a, b):
-        
+        """The text between a and b with every consumed citation span removed."""
         if text is None or b <= a:
             return "\x00"                                                                        
         cuts = sorted(s for s in self.spans if s[0] >= a and s[1] <= b)
@@ -1892,7 +2012,24 @@ class _Counter:
         return "".join(out)
 
     def finish(self, text=None):
-        
+        """L2 -- collapse a decision cited more than once in the same breath.
+
+        Two sub-rules, and both test WHAT separates the citations, not how far apart they are.
+        Distance alone is not safe: in a footnote list, consecutive footnotes are separated by
+        '.\\n\\n[5] ' -- about seven characters -- so a length threshold merges different cases
+        from adjacent footnotes. Measured on FCT v York Motors, a naive gap rule wrongly merged
+        five unrelated pairs while catching the six real ones.
+
+        L2a  PARALLEL FORM.  '[1946] HCA 6; (1946) 71 CLR 421' is one decision given its neutral
+             citation and its report citation. The separator must be only punctuation -- a
+             semicolon or comma and spaces. A newline, a full stop or a bracket means the next
+             citation belongs to a different sentence or footnote, so it is a different case.
+
+        L2b  PINPOINT.  '(1942) 1 KB 356 ... (1942) 1 KB, at p 362' is one decision cited twice,
+             the second time at a page. Requires the same year, reporter AND volume, and an
+             explicit pinpoint marker ('at') in between -- without the marker, two cases in the
+             same volume of the same year would be merged wrongly.
+        """
         self.kept.sort()
         drop = set()
                                                                                                
@@ -2328,7 +2465,12 @@ class _Counter:
         return [c for i, c in enumerate(self.kept) if i not in drop]
 
     def _resolve_pins(self):
-        
+        """File each dropped pinpoint under the authority it is a page of.
+
+        Two cases can share a volume -- Guest is 383 U.S. 745 and Price is 383 U.S. 787 -- so
+        the volume alone does not say which. A pinpoint lies at or after the first page of
+        its own report, so it belongs to the report in that volume with the LAST first page
+        not beyond it: 383 U.S. 754 is Guest, 383 U.S. 803 is Price."""
         def page(k):
             try:
                 return int(re.sub(r"[^0-9]", "", str(k[3]).split("-")[0]) or -1)
@@ -2352,7 +2494,7 @@ class _Counter:
 
 
 def _fields(name, groups):
-    
+    """(year, reporter, volume, number) for whichever pattern matched."""
     g = groups
     if name.startswith("cd_"):
         return _cd_fields(name, g)                                              
@@ -2426,7 +2568,8 @@ _CD_MONTHS = {m: i for i, m in enumerate(
 
 
 def _cd_date(s):
-    
+    """`March 29, 2021` / `21st May, 1958` / `7 May 1997` -> `29 March 2021` (F6's shape, so the key
+    is the same `UNREP` date key whichever way the date was printed)."""
     s = " ".join(str(s or "").replace(",", " ").replace(".", " ").split())
     m = re.match(r"(\d{1,2})(?:st|nd|rd|th|d)?[ ]([A-Za-z]{3,9})[ ](\d{4})$", s) or None
     if m:
@@ -2438,14 +2581,15 @@ def _cd_date(s):
 
 
 def _cd_docket(s):
-    
+    """A docket number as one token: dashes folded, `No` and spacing dropped, upper case."""
     s = re.sub(r"[‐-―−]", "-", str(s or ""))
     s = re.sub(r"\bNos?\b\.?", "", s, flags=re.I)
     return re.sub(r"[^A-Za-z0-9:/-]", "", s).upper()                                               
 
 
 def _cd_fields(name, g):
-    
+    """(year, reporter, volume, number) for the F20 forms. Reporter `CDK` (-> `DOCKET` in
+    `_norm_key`) for a docket number; `CDN[:court]` with a date, which `_norm_key` keys `UNREP`."""
                                                                                               
                                                                         
     if name.startswith("cd_hk"):
@@ -2484,7 +2628,8 @@ _CD_SAME = re.compile(
 
 
 def _cd_reject(text, start, rep):
-    
+    """F20 (14 Oct 2026): True unless the match at `start` follows a printed case name that is not
+    the judgment's own (R54 / R72)."""
     if len(text) < 600:
         return False                                                                                   
                                                                                   
@@ -2537,7 +2682,7 @@ def _cd_reject(text, start, rep):
 
 
 class ContextRequired(ValueError):
-    pass
+    """Raised when a judgment cannot be classified without knowing which court is citing."""
 
 
                                                                                         
@@ -2577,7 +2722,7 @@ _SECTION_CUE = re.compile(
 
 
 def _statute_section_before(text, start):
-    
+    """True where the number this match treats as a VOLUME is really a statute section number."""
     return bool(_SECTION_CUE.search(text[max(0, start - 18):start]))
 
 
@@ -2611,7 +2756,8 @@ _WRAPPED_PAGE = re.compile(
 
 
 def _mask_damaged_prefix(text):
-    
+    """Blank `NNN U.S. ` where a NAME follows instead of a page number, and heal `F.` /
+    `Supp.` split by a paragraph break. Length-preserving."""
     if not text:
         return text
     text = _BROKEN_FSUPP.sub(lambda m: " " * (m.end() - m.start()), text)
@@ -2689,7 +2835,7 @@ def _mask_damaged_prefix(text):
     def _scr(m):
         pre = " ".join(_t[max(0, m.start() - 140):m.start()].split())
         clause = re.split(r"[.;](?=[ ])", pre)[-1]
-        own = bool(re.search(r"(?i)\bleave\b", clause)) \
+        own = (not R108_ON) and bool(re.search(r"(?i)\bleave\b", clause)) \
             and bool(re.search(r"this[ ]Court|(?:was|were)[ ]granted|granted[ ]leave|with[ ]leave"
                                r"|pursuant[ ]to[ ]leave|application[ ]for[ ]leave", clause)) \
             and not re.search(r"[\d\])][,;]?[ ]\(?(?:application[ ]for[ ])?leave\b[^.;]*$", pre)
@@ -2747,7 +2893,24 @@ def _roman(s):
 
 
 def require_context(text, citing_court):
-    
+    """Refuse to guess when the answer depends on context we were not given.
+
+    Teo Ee Hup v Syed Hussain Alkaff [1982] SGHC 10 cites five authorities, every one of them a
+    Singapore decision reported in the Malayan Law Journal -- the MLJ was Singapore's own series
+    before 1992. With citing_court='SGHC' the engine returns SG=5, which is right. Without it the
+    engine returns MY=5, which is not merely imprecise, it is wrong on every authority in the
+    judgment. There is no safe default, so there is no default.
+
+    Independently verified for four of the five: The Happy World [1958] MLJ 155 and Ng Chik Puah
+    [1962] MLJ 349 are Tan Ah Tah J, a puisne judge of Singapore who never sat in the Federation;
+    Koh Chee Chong [1957] MLJ 197 is Whyatt CJ, Chief Justice of Singapore 1955-58.
+
+    WARNING ON SOURCES. vLex Malaysia carries stub records for four of these five tagged
+    'Jurisdiction: Malaysia', which is demonstrably false for the two attributed to Tan Ah Tah J.
+    It is an auto-assigned database artefact applied to pre-1965 MLJ stubs, not a finding about
+    the deciding court. Never treat a vLex jurisdiction tag on a pre-1992 MLJ citation as
+    evidence -- it will confirm this exact error rather than correct it.
+    """
     if citing_court is None and _NEEDS_COURT.search(text):
         raise ContextRequired(
             "text cites MLJ/MLJU, whose jurisdiction depends on the citing court; "
@@ -2756,7 +2919,7 @@ def require_context(text, citing_court):
 
 
                                                                                 
-                                                                                                
+                                                                                               
                                                                                                
                                                                                      
                                                                                              
@@ -2775,7 +2938,7 @@ _OWN_CIT = re.compile(r"(\d{1,4})\s+([A-Za-z][A-Za-z.\s]{0,12}?)\s+(\d{1,4})")
 
 
 def _own_pagination_key(own_citation):
-    
+    """(reporter, volume, first page) for the judgment's own citation, or None."""
     if not own_citation:
         return None
     m = _OWN_CIT.search(str(own_citation))
@@ -2798,7 +2961,7 @@ def _own_pagination_key(own_citation):
                                                                                             
                                                                                                 
 def _is_own_pagination(own, rep, vol, num, text=None, start=None):
-    
+    """True where this match is the judgment's own running head rather than an authority."""
     if not own:
         return False
     orep, ovol, opage = own
@@ -2879,13 +3042,13 @@ _OWN_AFTER = re.compile(
 
 
 def _report_tokens_only(s):
-    
+    """True where `s` is nothing but citation matter: years, volumes, series, pages."""
     toks = s.split()
     return len(toks) <= 40 and all(_REPORT_TOK.match(t) for t in toks)
 
 
 def _own_report_line(text, start):
-    
+    """True where this citation stands in the judgment's own report line (forms a-d above)."""
     if _OWN_AFTER.match(" ".join(text[start:start + 130].split())):
         return True                                                     
     before = text[max(0, start - 420):start]
@@ -2930,7 +3093,7 @@ def _own_report_line(text, start):
 
 
                                                                                             
-                                                                                                 
+                                                                                                
                                                                                                    
                                                                                              
                                                                                                 
@@ -2966,7 +3129,7 @@ _R72_PARENS = re.compile(r"\([^()]*\)|\[[^\[\]]*\]")
 
 
 def _r72_tokens(s):
-    
+    """The words of a party name that identify it (lower case; company and joinder words out)."""
     s = _R72_CROWN.sub("R", str(s or "")).replace("PP", "Public Prosecutor")
     s = _R72_PARENS.sub(" ", _R72_PARENS.sub(" ", s))
     ws = [w for w in re.findall(r"[^\W_]+(?:'[^\W_]+)?", s.lower().replace("’", "'"))
@@ -2977,7 +3140,9 @@ def _r72_tokens(s):
 
 
 def _para_before(text, start, width=520):
-    
+    """The text of the paragraph in front of `start`. Where the citation opens a paragraph (the
+    cleaned files break some sentences after an initial, `for David H.\\n\\nWall. 488 U.S. 906`,
+    and some footnotes between the name and the citation) the paragraph before it is kept too."""
     before = text[max(0, start - width):start]
     cut = before.rfind("\n\n")
     if cut >= 0 and len(before[cut + 2:].strip()) < 40:
@@ -2986,7 +3151,7 @@ def _para_before(text, start, width=520):
 
 
 def _r72_title_sides(header):
-    
+    """(left tokens, right tokens) of the title `A v B` in a `CASE:` line or a file name."""
     s = " ".join(str(header or "").split())
     s = re.sub(r"^\d{4}-\d{2}-\d{2}[ ]-[ ]", "", s)                                                
     s = re.sub(r"[ ]?(?:\[\[?(?:1[5-9]|20)\d{2}|\((?:\d{1,3}[ ]U\.[ ]?S\.|\d{1,3}[ ]L\.[ ]?Ed)).*$", "", s)
@@ -3005,7 +3170,7 @@ def _r72_title_sides(header):
 
 
 def set_own_case(header=None):
-    
+    """Hand the engine the title line of the judgment about to be read (None clears it)."""
     sides = _r72_title_sides(header) if header else None
     _R72["sides"] = sides
     _R72["gen"] += 1
@@ -3147,7 +3312,8 @@ _R72_NZ_LABEL = re.compile(r"^(?:[^\n\[\]]|\[(?:1[5-9]|20)\d{2}\]){0,170}\[(?:SC
 
 
 def _r72_chain_head(flat, cc):
-    
+    """Strip the citations that stand between a case name and this citation (its parallels).
+    Returns (what is left, True where one of them is this court's own neutral or series)."""
     own, s = False, flat
     for _ in range(6):
         t = _R72_TRAIL_OTHER.sub("", s)
@@ -3162,7 +3328,7 @@ def _r72_chain_head(flat, cc):
 
 
 def _r72_cited_sides(s):
-    
+    """(left tokens, right tokens, right text) of the case name that runs up to the citation."""
     s = _R72_PARENS.sub(" ", _R72_PARENS.sub(" ", s[-460:])).rstrip(" ,([")
     i = max(s.rfind(" v "), s.rfind(" v. "))
     if i < 0:
@@ -3196,7 +3362,8 @@ _R72_ABBR = {"ct": "court", "comm'n": "commission", "commn": "commission", "dept
 
 
 def _name_sig(text, start):
-    
+    """The two parties printed straight in front of the citation at `start` (its parallels
+    aside), as a pair of word sets -- or None where no case name stands there (L4 in finish())."""
     flat = " ".join(_para_before(text, start, 420).split()) + " "
     head, _own = _r72_chain_head(flat, "")
     head = re.sub(r"[ ]?\(?[ ]?(?:1[5-9]|20)\d{2},?[ ]?$", " ", head)                                      
@@ -3232,7 +3399,8 @@ _FRONT_NOISE = frozenset("see per lord lords justice cf also in the at and case 
 
 
 def _front(text, start):
-    
+    """What the judgment prints straight in front of the citation at `start`, its parallels
+    aside: ("sig", parties) / ("short", words of a short name) / ("bare",) / ("other",)."""
     sig = _name_sig(text, start)
     if sig:
         return ("sig", sig)
@@ -3252,7 +3420,8 @@ def _front(text, start):
 
 
 def _same_front(a, b):
-    
+    """The same case named before two citations: the two parties (one printing may be fuller),
+    or a short name all of whose words are in the other's name."""
     if a[0] == "sig" and b[0] == "sig":
         return a[1][2] == b[1][2] and _r72_side(a[1][0], b[1][0]) and _r72_side(a[1][1], b[1][1])
     if a[0] == "short" and b[0] == "sig":
@@ -3265,7 +3434,9 @@ def _same_front(a, b):
 
 
 def _r72_note_sentence(text, at, mark):
-    
+    """The words of the judgment in front of the marker of footnote `mark` (`...to this Court[1].`,
+    `...refused the applicant leave to appeal (FN1).`): a citation alone in a footnote takes its
+    cue from the sentence the footnote hangs on."""
     n = re.sub(r"\D", "", mark)
     if not n:
         return ""
@@ -3281,7 +3452,7 @@ LS_C6 = _os.environ.get("JR_LS_C6", "1") != "0"
 
 
 def _ls_one_off(x, y):
-    
+    """Two words one letter apart (one changed, added or dropped), four letters or more."""
     if min(len(x), len(y)) < 4 or abs(len(x) - len(y)) > 1 or x == y:
         return x == y
     if len(x) == len(y):
@@ -3291,7 +3462,7 @@ def _ls_one_off(x, y):
 
 
 def _ls_fuzzy_side(t, c):
-    
+    """`_r72_side`, where at most one word of the cited name is one letter off a word of the title."""
     if not (t and c):
         return False
     odd = [w for w in c if w not in t]
@@ -3306,7 +3477,9 @@ def _ls_fuzzy_side(t, c):
 
 
 def _r72_side(t, c):
-    
+    """One party of the title against one party of the cited name: the same, or one a fuller
+    form of the other (`Barton` / `David Simon Barton`). Shared words alone are not enough --
+    `Tan Ah Kow` is not `Tan Ah Teck`."""
     return bool(t and c) and (c <= t or t <= c)
 
 
@@ -3324,7 +3497,7 @@ _R72_SCAN = {"key": None, "ids": frozenset()}
 
 
 def _r72_cid(m):
-    
+    """What identifies a citation across its printings: volume (else year), series, page."""
     return (m.group(4) or m.group(1) or m.group(2) or m.group(3) or "",
             re.sub(r"[^A-Z]", "", m.group(5).upper()), m.group(6))
 
@@ -3361,7 +3534,7 @@ def _r72_own_ids(text, citing_court):
 
 
 def _r72_own_case(text, start, rep, citing_court):
-    
+    """True where this citation is this court's own earlier step in the litigation (R72)."""
     if _r72_own_core(text, start, rep, citing_court):
         return True
     if len(text) < 400 or not _r72_court(citing_court):
@@ -3388,8 +3561,46 @@ def _r72_own_case(text, start, rep, citing_court):
     return False
 
 
+def _r108_self(text, start, rep, citing_court):
+    """R108 (24 Nov 2026): THE JUDGMENT'S OWN CITATION is never an authority, even now that this court's earlier
+    steps count. These are the self tests of `_r72_own_core`, unchanged: the own citation wherever printed (and the
+    reports in front of it in the citation block, outside the House of Lords), the LawNet availability note, a
+    parallel of the own citation in the same chain, and a House of Lords file's own report named in its citation."""
+    cc = _r72_court(citing_court)
+    if not cc:
+        return False
+    before = _para_before(text, start, 760)
+    after = " ".join(text[start:start + 260].split())
+    if _R72["owncite"] is not None:
+        if _R72["owncite"].match(after):
+            return True
+        mo = _R72["owncite"].search(after[:190]) if cc != "UKHL" else None
+        if mo and not re.search(r"(?<![A-Za-z])[a-z]{3,}", after[:mo.start()]):
+            return True
+    if re.match(r"[^\n]{6,26}[ ]is[ ]available[ ]on[ ]LawNet", after):
+        return True
+    fn = None
+    for fn in re.finditer(r"(?:^|\n)[ \t]*(?:\[\d{1,3}\]|\d{1,3})[ \t]+(?=[A-Z(\[])", before):
+        pass
+    if fn is not None:
+        before = before[fn.end():]
+    flat = " ".join(before.split()) + " "
+    cc = _R72["owncode"] or cc
+    head, _chain_own = _r72_chain_head(flat, cc)
+    if _R72["owncite"] is not None and cc != "UKHL" and _R72["owncite"].search(flat[len(head):]):
+        return True
+    orp = _R72["ownrep"]
+    if orp and cc == "UKHL":
+        m = re.match(r"(?:\((?:1[5-9]|20)\d{2}\)[ ])?(\d{1,3})[ ]([A-Za-z.&][A-Za-z.& ]{0,12}?)[ ](\d{1,4})\b", after)
+        if m and m.group(1) == orp[0] and m.group(3) == orp[2]:
+            r_ = re.sub(r"[^A-Z]", "", m.group(2).upper())
+            if r_ and (r_.startswith(orp[1]) or orp[1].startswith(r_)):
+                return True
+    return False
+
+
 def _r72_own_core(text, start, rep, citing_court):
-    
+    """True where the words round this citation say it is this court's own step (R72)."""
     cc = _r72_court(citing_court)
     if not cc:
         return False
@@ -3606,7 +3817,8 @@ _OWN_ORDER_TAIL = re.compile(
 
 
 def _own_order_before(text, start):
-    
+    """True where a bare United States Reports citation follows a sentence in which the Court
+    says what it did in the case before it."""
     flat = " ".join(_para_before(text, start).split()) + " "
     cue = None
     for cue in _OWN_ORDER_CUE.finditer(flat):
@@ -3658,7 +3870,7 @@ _PENDING_SCAN = {"key": None, "nums": frozenset()}
 
 
 def _pending_applications(text):
-    
+    """Strasbourg application numbers the judgment itself says are still pending."""
     key = (len(text), text[:80], text[-80:])
     if _PENDING_SCAN["key"] != key:
         nums = set()
@@ -3719,14 +3931,16 @@ def _ls_own_form(text, start, citing_court):
 
 
 def _own_grant_before(text, start, rep, citing_court=None):
-    
+    """True where this citation is the court's own grant of review in the case before it."""
     if str(rep or "").startswith(("CDK", "CDN")):                                                  
         return _cd_reject(text, start, str(rep).split(":")[0])
     if citing_court is not None and _ls_own_form(text, start, citing_court):
         return True                                                        
     if _own_report_line(text, start):                                                        
         return True
-    if citing_court is not None and _r72_own_case(text, start, rep, citing_court):        
+    if not R108_ON and citing_court is not None and _r72_own_case(text, start, rep, citing_court):                         
+        return True
+    if R108_ON and citing_court is not None and _r108_self(text, start, rep, citing_court):
         return True
     _rep = str(rep or "")
                                                                              
@@ -3746,7 +3960,7 @@ def _own_grant_before(text, start, rep, citing_court=None):
             return True
     if re.sub(r"[^A-Z0-9]", "", str(rep or "").upper()) not in _OWN_GRANT_REPS:
         return False
-    if _own_order_before(text, start):                                                          
+    if not R108_ON and _own_order_before(text, start):                                                                     
         return True
                                                                                       
                                                                                              
@@ -3758,6 +3972,8 @@ def _own_grant_before(text, start, rep, citing_court=None):
     if re.search(r"\bRules\b[^.;]{0,90}\beffective\b[^.;]{0,60}[.,][ ]$",
                  " ".join(text[max(0, start - 220):start].split()) + " "):
         return True
+    if R108_ON:
+        return False                                                                         
     m = _OWN_GRANT.search(text[max(0, start - 300):start])
     if not m:
         return False
@@ -3778,7 +3994,19 @@ def _own_grant_before(text, start, rep, citing_court=None):
 
 
 def count(text, reporters, citing_court=None, own_citation=None, own_name=None, own_header=None):
-    
+    """Return {jurisdiction: distinct authorities}.
+
+    `reporters` is the jr_reporters module. The full text and the match offset are handed to it
+    so it can see the surrounding words -- that is what lets it tell a Court of Justice judgment
+    reported in the Queen's Bench from an English one, and a journal reference from a law report.
+    Classifying on the abbreviation alone cannot do either.
+
+    `own_name` (14 Oct 2026, R72) is the judgment's own title line -- the file's `CASE:` line, or
+    case name plus citation -- so that this court's earlier decisions in the same litigation are
+    not returned as authorities. See `set_own_case`.
+
+    Raises ContextRequired if the text needs a citing court and none was supplied.
+    """
     if own_name is not None:
         set_own_case(own_name)
     require_context(text, citing_court)
@@ -3834,13 +4062,30 @@ def count(text, reporters, citing_court=None, own_citation=None, own_name=None, 
         for s, e, k in _file_numbers(text):
             c.consume(s, e, home, ('filenum', k, '', ''), 'filenum')
 
-    for _s, _e, juri, _k, _f in _hk_finish(c, text, hk):
+    fin = list(_hk_finish(c, text, hk))
+    for _s, _e, juri, _k, _f in fin:
+        out[juri] = out.get(juri, 0) + 1
+    for _s, _e, juri, _d, _k in _bare_names(text, [(f[0], f[1]) for f in fin], own_name, own_citation):          
         out[juri] = out.get(juri, 0) + 1
     return out
 
 
 def items(text, reporters, citing_court=None, own_citation=None, own_name=None, own_header=None):
-    
+    """The SAME authorities `count` counts, returned individually instead of tallied.
+
+    Yields dicts: {jurisdiction, citation, key, form, start, end, aliases}. `citation` is the
+    text exactly as the judgment printed it; `aliases` holds the other names of the same
+    authority where a parallel citation merged ('[1992] HCA 23; (1992) 175 CLR 1' is ONE
+    authority with two names, and which one survives is an accident of what the court wrote
+    first).
+
+    ⚠️ THIS IS A DELIBERATE NEAR-COPY OF `count`, NOT A REFACTOR OF IT. The counting engine is
+    frozen and its numbers are the published ones; rewriting `count` to delegate here would put
+    every recorded citation figure at risk to save a dozen lines. The two are held together by a
+    test instead: for any text, the per-jurisdiction tally of what this returns must equal what
+    `count` returns. If the bodies ever drift, that check fails loudly rather than silently
+    producing a list that disagrees with the column beside it.
+    """
     if own_name is not None:
         set_own_case(own_name)                                       
     require_context(text, citing_court)
@@ -3890,7 +4135,8 @@ def items(text, reporters, citing_court=None, own_citation=None, own_name=None, 
             c.consume(s, e, home, ('filenum', k, '', ''), 'filenum')
 
     out = []
-    for s, e, juri, k, f in _hk_finish(c, text, hk):
+    fin = list(_hk_finish(c, text, hk))
+    for s, e, juri, k, f in fin:
         out.append({
             "jurisdiction": juri,
             "citation": re.sub(r"\s+", " ", text[s:e]).strip(),
@@ -3901,11 +4147,16 @@ def items(text, reporters, citing_court=None, own_citation=None, own_name=None, 
             "aliases": sorted(" ".join(str(x) for x in a if x)
                               for a in c.aliases.get(k, ()) if a != k),
         })
+    for s, e, juri, d, k in _bare_names(text, [(f[0], f[1]) for f in fin], own_name, own_citation):          
+        out.append({"jurisdiction": juri, "citation": d, "key": "BARE " + k, "form": "barename",
+                    "start": s, "end": e, "aliases": []})
     return out
 
 
 def occurrences(text, reporters, citing_court=None, own_citation=None, own_name=None, own_header=None):
-    
+    """Citation events rather than distinct authorities -- L0 only, no L1 or L2.
+    Kept because the ratio between the two measures citation style, and because the
+    existing Master columns are occurrence counts."""
     if own_name is not None:
         set_own_case(own_name)                                       
     require_context(text, citing_court)

@@ -191,7 +191,7 @@ _ACAD_JOURNAL_PATTERNS = [
 _ACAD_BOOK_PATTERNS = [
                                          
                                                                                             
-                                                                                        
+                                                                                              
                                                                                             
                                                                                                
                                                                                             
@@ -698,7 +698,7 @@ _DOT_ABBREV_RE = re.compile(
 
 
 def _normalize_dotted_abbrevs(text):
-    
+    """Convert dotted uppercase abbreviations to plain form: L.Q.R. → LQR, M.L.R. → MLR."""
     def _join(m):
         return ''.join(g for g in m.groups() if g)
     return _DOT_ABBREV_RE.sub(_join, text)
@@ -708,7 +708,7 @@ def _normalize_dotted_abbrevs(text):
                                                     
 
 
-                                                                                             
+                                                                                            
                                                                                                
                                                                                                
                                                                                              
@@ -717,10 +717,10 @@ def _normalize_dotted_abbrevs(text):
                                                                                            
                                                                                       
                                                                                        
-                                                                                           
+                                                                                          
                                                                                              
             
-                                                                                         
+                                                                                        
                                                                         
  
                                                                                        
@@ -838,7 +838,7 @@ _GOV_REPORT_RE = re.compile(
     re.I)
 
                                                                                                                         
-                                                                                               
+                                                                                              
                                                                                                 
                                                                                       
                                                                                                
@@ -847,7 +847,7 @@ _GOV_REPORT_RE = re.compile(
                                                                                                
                                                                                                  
                             
-                                                                                                              
+                                                                                                             
                                                                                                                
                                                                                                                   
                                                                   
@@ -864,7 +864,7 @@ _ENCYCLOPAEDIA_RE = re.compile(
     r"|\bEncyclopaedia\s+of\s+\w+\s+Law\b",
     re.I)
 
-                                                                                                               
+                                                                                                              
                                                                                                                   
                                                                                                              
                                                                                                                 
@@ -905,7 +905,7 @@ _NON_LEGAL_EXCLUDE_RE = re.compile(
     r'|^\s*(?:the\s+|a\s+|le\s+|la\s+|les\s+)?dicti?onn?ary?\b'
     r'|^\s*(?:the\s+|a\s+|le\s+|la\s+|les\s+)?dictionnaire\b'
     r'|\bdictionn?aire\s+d[eu]\b'
-                                                                                           
+                                                                                      
                                                                                           
                                                                                 
                                                                                             
@@ -919,7 +919,7 @@ _NON_LEGAL_EXCLUDE_RE = re.compile(
                                                                          
     r'|\bModern\s+English\s+Usage\b'
     r'|\bGuide\s+to\s+Grammar\b'
-                                                                                           
+                                                                                          
                                                                                            
                                                                                           
                                                                      
@@ -1000,7 +1000,9 @@ _TITLE_YEAR_BEFORE = re.compile(
     "[ \t]*[)][ \t\u00a0]*,?[ \t\u00a0]*(?:[0-9]{1,3}[ \t]*:[ \t]*)?$")
 
 def _j3_has_context(work, s, e, window=100):
-    
+    """Return True if a J3 bare abbreviation appears in a citation context
+    (year in parens/brackets, volume number immediately before, or page number
+    immediately after — within window chars)."""
     pre  = work[max(0, s - window):s]
     post = work[e:min(len(work), e + window)]
     year_nearby = bool(re.search(r'[\(\[]\d{4}[\)\]]', pre + post))
@@ -1053,7 +1055,7 @@ _OFFICIAL_REPORT = re.compile(
                                                                          
                                                                                             
                                           
-                                                                                                  
+                                                                                             
                                                                                       
                                                                                           
                                                             
@@ -1062,7 +1064,7 @@ _OFFICIAL_REPORT = re.compile(
                                                                 
                                                                             
                                                      
-                                                                                             
+                                                                                            
                                                                                         
                                                                                      
     r"cabinet\s+office|hm\s+treasury|home\s+office|department\s+of\s+state\s+bulletin|"
@@ -1144,10 +1146,10 @@ _NEWS_MASTHEAD = re.compile(
 _NOT_A_WORK = re.compile(
                                                                                                
                                                                                       
-                                                                                            
+                                                                                           
                                                                                               
                                                                           
-                                                                                            
+                                                                                           
                                                       
                                                                                
                                                                                            
@@ -1190,7 +1192,7 @@ _NOT_A_WORK = re.compile(
                                                                                
     r"|^\s*(?:International\s+)?(?:Covenant|Convention|Protocol|Treaty|Charter)\s+on\b"
     r"|\bCovenant\s+on\s+(?:Civil|Economic|Human)\b"
-                                                               
+                                                                    
     r"|\bSdn\s+Bhd\b|\bPte\s+Ltd\b"
     r"|\b(?:Selected|Collected)\s+Poems\b"
                                                                       
@@ -1305,7 +1307,7 @@ _FN_MARK = re.compile(r"\[(\d{1,4})\]\s")
 
 
 def _footnote_cut(back):
-    
+    """Index of the rightmost footnote marker in BACK, ignoring a bracketed year, or -1."""
     best = -1
     for m in _FN_MARK.finditer(back):
         if 1500 <= int(m.group(1)) <= 2100:
@@ -1318,7 +1320,7 @@ def _footnote_cut(back):
                                                                                   
                                                                                           
                                  
-                                                                                          
+                                                                                         
                                                                                               
                                                                       
                                                                                                       
@@ -1359,7 +1361,7 @@ _PRACTICE_ANNUAL = re.compile(
     r"\s+(?:19|20)\d{2}\b(?!\s*\(\s*(?:Cap|No)\b)")
 
 
-                                                                                            
+                                                                                           
                                                                                                  
                                                                                               
                   
@@ -1407,7 +1409,7 @@ _LAW_REFORM_PAPER = re.compile(
     r"(?:\((?:Interim|Final|Summary|Vol(?:ume)?\.?\s*\d)\)\s*,?\s*)?"
     r"\(?\s*(?:[A-Z][a-z]+\s+)?(?P<y>(?:1[89]|20)\d\d)\s*\)?")
 
-                                                                                                                    
+                                                                                                                   
                                                                                                                     
                                                                                                                      
                                                                                                                      
@@ -1449,7 +1451,7 @@ _LR2_WORDS = {w: i + 1 for i, w in enumerate(("first second third fourth fifth s
 
 
 def _law_reform_ord(work):
-    
+    """B24: (start, end, label, key) for each law-reform report printed in forms A-D above, one per report."""
     out, seen = [], set()
     for rx in _LAW_REFORM_ORD:
         for m in rx.finditer(work):
@@ -1478,7 +1480,16 @@ _QUOTE_CHARS = "“”‘’\"'"
 
 
 def _mask_quoted(s):
-    
+    """S with the inside of every quotation blanked, same length.
+
+    ⚠️ A SEPARATOR INSIDE A TITLE IS NOT A BOUNDARY. Article titles carry subtitles --
+    "Hunting the Snark; the Elusive Statutory Exception" -- and a rule that trims context
+    at the last "; " lands in the middle of the title, loses the author with it, and the
+    article is then read as a law report. Masking the quoted spans first means only
+    separators in running text can cut.
+
+    Length-preserving, so offsets computed on the mask are valid in the original.
+    """
     out, inside = [], False
     for ch in str(s or ""):
         if ch in _QUOTE_CHARS:
@@ -1579,7 +1590,12 @@ _LIST_ITEM_AFTER = re.compile(r"^\s*,\s*[A-Z][A-Za-z'\u2019\-]{2,20}\s*[,)]")
 
 
 def _party_tail_before(pre):
-    
+    """True where the text immediately before a match is the front of a case name.
+
+    'McDowell v Hirschfield ' -- a versus, then capitalised words and nothing else. ANY
+    punctuation ends it, because a treatise cited after a case is introduced by one:
+    '... Ltd v Jones, Treitel, The Law of Contract' must not be caught.
+    """
     s = str(pre or "")
     i = max(s.rfind(" v "), s.rfind(" v. "))
     if i < 0:
@@ -1620,7 +1636,7 @@ _OPEN_YEAR_TAIL = re.compile(r"\((?:1[6-9]|20)\d{2}$")
 
 
 def _is_case_report_tail(work, end):
-    
+    """True where the text right after a '... (YEAR' match is a LAW REPORT citation."""
     m = _CASE_REPORT_TAIL.match(work[end:end + 70])
     if not m:
         return False
@@ -1660,7 +1676,7 @@ _ENDS_ON_YEAR = re.compile(r"(?:1[6-9]|20)\d{2}(\)?)\s*$")
 
 
 def _case_cite_follows(work, end, t):
-    
+    """True where a match ending on a year is followed by a law-report citation, not a journal's."""
     my = _ENDS_ON_YEAR.search(str(t or ""))
     if not my:
         return False
@@ -1692,7 +1708,7 @@ _SEE_CUE_CUT = re.compile(r"[:;]\s{1,3}see\s+(?=[A-Z\u201c\u2018\"])")
 
 
 def _is_author_of_next(t1, sep, t2, tail):
-    
+    """t1 is a bare surname and t2 the citation that follows it after a comma."""
     if not _AUTHOR_COMMA.match(sep):
         return False
     if not _BARE_AUTHOR_NAME.match(t1.strip()):
@@ -1701,7 +1717,7 @@ def _is_author_of_next(t1, sep, t2, tail):
 
 
 def _is_austlii_parallel(t1, sep, t2):
-    
+    """t1 and t2 are ONE article printed under AustLII's two citations."""
     if not _PARALLEL_SEMI.match(sep):
         return False
     m1 = _AUSTLII_NEUTRAL_TAIL.search(t1)
@@ -1710,7 +1726,7 @@ def _is_austlii_parallel(t1, sep, t2):
 
 
 def _is_not_a_work(text):
-    
+    """True for a dictionary, an annotated practice work, judicial prose or a law report."""
     s = str(text or "")
     if _PER_JUDGE.search(s):
         return True                                                    
@@ -1728,7 +1744,7 @@ def _is_not_a_work(text):
         return True
     if _SPEECH_THEN_YEAR.search(s):
         return True                                                               
-                                                                                     
+                                                                                    
                                                                                            
                                                                                     
                                                                                            
@@ -1810,14 +1826,21 @@ COUNT_OFFICIAL_REPORTS = False
 
 
 def set_count_official_reports(flag):
-    
+    """True counts law-reform and agency reports as academic references."""
     global COUNT_OFFICIAL_REPORTS
     COUNT_OFFICIAL_REPORTS = bool(flag)
     return COUNT_OFFICIAL_REPORTS
 
 
 def _authored_article(s):
-    
+    """True for a quoted title followed by a journal citation -- an ARTICLE.
+
+    ⚠️ AN ARTICLE HAS NO EDITION, so `_authored_edition` cannot vouch for it, and
+    without a voucher `_is_official_report` vetoes any article whose TITLE happens to
+    name an institution -- 'The Legal Personality of the Commonwealth of Australia'
+    (2019) 47 Federal Law Review 4. Titles naming the Crown, the Commonwealth, Parliament
+    or the Union are ordinary in legal scholarship.
+    """
     s = str(s or "")
     if _ARTICLE_TITLE_CITE.search(s):
         return True
@@ -1836,7 +1859,7 @@ def _authored_article(s):
     return bool(_ARTICLE_CUE.search(s))
 
 
-                                                                                           
+                                                                                          
                                                                                         
                                                                                         
                                
@@ -1854,7 +1877,7 @@ _LAW_REFORM_BODY = re.compile(
                                                                                                   
     r"|law\s+commission(?=,)|law\s+com(?:mission|\.)?(?:\s+report)?\s*,?\s+no\b|\blccp\s+\d"
     r"|law\s+reform\s+committee"
-                                                                                              
+                                                                                             
                                                                                                
                                                
     r"|(?:criminal\s+)?law\s+revision\s+committee"
@@ -1872,7 +1895,7 @@ _LAW_REFORM_BODY = re.compile(
 
 
 def _is_official_report(text):
-    
+    """True for a committee, commission or parliamentary publication."""
     if COUNT_OFFICIAL_REPORTS:
         return False                                                       
     t = str(text or "")
@@ -1939,7 +1962,7 @@ _HONOURED_NOT_AUTHOR = re.compile(
 
 
 def _bare_name_corroborated(text, matched, start, end):
-    
+    """True when a one-word surname match is followed by something naming a WORK."""
     if not _BARE_NAME.match(str(matched or "").strip()):
         return True                                                                 
     if ENCYCLOPAEDIAS_IN and str(matched or "").strip() == "Wikipedia":
@@ -1977,12 +2000,16 @@ _JOURNAL_YEAR = re.compile(r"\b(1[6-9]\d{2}|20[0-2]\d)\b(?=.*?\d)")
 
 
 def _journal_years(k):
-    
+    """The years of any JOURNAL-shaped citation in a dedup key."""
     return frozenset(_JOURNAL_YEAR.findall(k or ""))
 
 
 def _contains_words(haystack, needle):
-    
+    """True where `needle` appears in `haystack` as a whole run of words.
+
+    Dedup keys are space-separated words, so containment has to align on word boundaries.
+    'wade' is inside 'wadesworth' as characters and is a different author.
+    """
     if not needle:
         return False
     h = " " + haystack + " "
@@ -2077,12 +2104,19 @@ _JOIN_WORDS = frozenset(("the", "of", "a", "an", "and", "on", "in", "to", "for",
 
 
 def _skeleton(s):
-    
+    """A key's words with the connecting words dropped, for the second containment test."""
     return [w for w in re.findall(r"[a-z][a-z']+", (s or "").lower()) if w not in _JOIN_WORDS]
 
 
 def _norm_key(t):
-    
+    """Normalise a matched string to a canonical dedup key.
+    Strips possessives, edition ordinals, normalises connectors (&/and/comma),
+    collapses whitespace. Allows text-based dedup to collapse repeated citations
+    of the same work across different surface forms:
+      'Phipson' x13 → 1
+      'Goff & Jones' == 'Goff and Jones' == 'Goff, Jones'
+      'CLJ' == 'Cambridge Law Journal' (via _JOURNAL_ABBREV_ALIASES)
+    """
     k = _LEAD_JUNK.sub('', str(t or '')).lower()
     prev = None
     while prev != k:                                                          
@@ -2149,7 +2183,7 @@ _AUTHORED_EDITION = re.compile(
 
 
 def _authored_edition(s):
-    
+    """True if this reads as 'Author, Title, Nth ed' -- the treatise form, not a report."""
     return bool(_AUTHORED_EDITION.search(str(s or "")))
 
 
@@ -2165,7 +2199,7 @@ _AUTHORED_BOOK = re.compile(
 
 
 def _authored_book(s):
-    
+    """True if this reads as 'Author, Title (year)' -- a book, not a report."""
     return bool(_AUTHORED_BOOK.search(str(s or "")))
 
 
@@ -2205,7 +2239,7 @@ _AUTHORED_CHAPTER = re.compile(
 
 
 def _authored_chapter(s):
-    
+    """True for '"Title", in Editor (ed)' -- a chapter in an edited collection."""
     return bool(_AUTHORED_CHAPTER.search(str(s or "")))
 
 
@@ -2225,7 +2259,7 @@ _CORPORATE_AUTHOR = re.compile(
 
 
 def _person_authored_book(s):
-    
+    """'Author, Title (year)' where the author is a PERSON, not a body."""
     m = _AUTHORED_BOOK.search(str(s or ""))
     if not m:
         return False
@@ -2248,7 +2282,7 @@ _DIACRITIC_FOLD = {ord(a): b for a, b in zip(
 
 
 def _fold_diacritics(t):
-    
+    """Accented Latin letters to plain, character for character."""
     return str(t or "").translate(_DIACRITIC_FOLD)
 
 
@@ -2284,7 +2318,21 @@ _ABBREV_HEAD = re.compile(r"^([A-Z][A-Za-z.&'\-]*)")
 
 
 def _defined_abbrevs(text):
-    
+    """Abbreviations THIS judgment defines for itself, normalised as the journal table is.
+
+    ⚠️ EVERY QUOTED TERM IN THE PARENTHESIS COUNTS, NOT JUST THE FIRST. The first version
+    anchored on the opening bracket and read one term, which missed the case this guard was
+    written for: [2021] SGCA(I) 5 defines two at once --
+
+        "(the "CLPA claim" and the "CLP Act" respectively)"
+
+    -- and it is the SECOND, "CLP Act", that collides with Current Legal Problems. So the
+    parenthetical is taken whole and every quoted term inside it is read.
+
+    Both the whole term and its leading token are returned: the court writes ("CLP 581")
+    once and "CLP 581" thereafter, but the pattern that fires is on the bare "CLP", so the
+    head has to be vetoed as well as the phrase.
+    """
     out = set()
     for pm in _DEFN_PAREN_RE.finditer(text or ""):
         inner = pm.group(1)
@@ -2341,7 +2389,7 @@ _BRACKET_INSTRUMENT = re.compile(r"\[\s*$")
 _BRACKET_INSTRUMENT_TAIL = re.compile(r"^\s*\d{1,5}\s*\]")
 
 
-                                                                                            
+                                                                                           
                                                                                           
                                                                                         
                     
@@ -2475,7 +2523,7 @@ _OLD_ON_EDN = re.compile(_OLD_ON_PAGE.pattern.split(r"\s+on\s+")[0] + r"\s+[oO]n
 
 
 def _old_short_forms(text, distinct):
-    
+    """Keys for the ACAD_OLD shapes, each added once and only where no key already holds the writer."""
     text = text or ""
     have = [set(re.findall(r"[a-z]+", k)) for k in distinct]
     out = []
@@ -2533,7 +2581,7 @@ def _old_short_forms(text, distinct):
     return out
 
 
-                                                                                                  
+                                                                                                 
                                                                                             
                                                                             
                                                                                             
@@ -2573,7 +2621,7 @@ _SF_ON = re.compile(
 _SF_AUTHOR_EDITION = re.compile(
     r"(?<![A-Za-z.])(?P<a>" + _SF_NAME + r"),\s+(?P<c>\d{1,2}\s*(?:st|nd|rd|th|d)\s+ed\.?,?"
     r"\s*\(?(?:1[6-9]|20)\d\d\)?)")
-                                                                                                
+                                                                                               
                                                                     
                                                                                            
                                                                                             
@@ -2627,7 +2675,7 @@ _SF_PROF_PAREN = re.compile(
     r"(?:Professor|Prof\.?|Dr\.?|Sir|Mr\.?)\s+(?:[A-Z][A-Za-z.]*\s+){0,2}(?P<a>" + _SF_NAME + r")\s+"
     r"\(\s*(?:in\s+)?(?P<t>" + _SF_TITLE + r")(?P<c>\s*,\s*" + _SF_ORD + r")")
                                                                                                
-                                                                                                
+                                                                                               
                                                                                                  
                                                                                    
                                                                                                           
@@ -2757,7 +2805,7 @@ _SPEECH_THEN_YEAR = re.compile(
 
 
 def _short_form_treatises(work):
-    
+    """(start, end, text) for each B20 match that survives its own guards."""
     out = []
     for rx in (_SF_AUTHOR_TITLE, _SF_POSSESSIVE, _SF_ON, _SF_AUTHOR_EDITION,
                _SF_AUTHOR_PAREN_EDITION, _SF_CLASSIC, _SF_US_BOOK, _SF_PROF_PAREN,
@@ -2867,7 +2915,7 @@ _RUN_ENCYC = re.compile(r"(?i)\bhalsbury|\bcorpus\s+juris\b|\bam(?:erican)?\.?\s
 
 
 def _imprint_span(work, s, e, t):
-    
+    """(start, end) of the imprint bracket a match is, or is a piece of; None for anything else."""
     ts = str(t or "").strip()
     if _IMPRINT_ONLY.match(ts):
         return s, e
@@ -2882,7 +2930,7 @@ def _imprint_span(work, s, e, t):
 
 
 def _run_before(work, s):
-    
+    """Start of the capitalised run that ends where the bracket at `s` opens (or `s`, if none)."""
     lo = max(0, s - 260)
     toks = [(m.start() + lo, m.group()) for m in re.finditer(r"\S+", work[lo:s])]
     if toks and toks[0][0] == lo and lo > 0:
@@ -2918,7 +2966,7 @@ def _run_before(work, s):
     return s
 
 
-                                                                                                   
+                                                                                                  
                                                                                                     
                                                                                                 
                                                                                                
@@ -3062,13 +3110,13 @@ _ZF_HAS_DATE = re.compile(r"(?:1[5-9]|20)\d\d|\b[Ee]d\b")
 
 
 def _zf_lower_words(s):
-    
+    """The lower-case words of `s` that are not connectors."""
     w = [x.strip(",.;:()'’\"“”") for x in str(s or "").split()]
     return [x for x in w if x[:1].islower() and x not in _ZF_CONNECT]
 
 
 def _zf_trim(ts):
-    
+    """Offset in `ts` at which the work starts (0 where no lead-in is printed)."""
     cut = 0
     for m in _ZF_LEAD_CUE.finditer(ts):
         cut = m.end()
@@ -3082,7 +3130,8 @@ def _zf_trim(ts):
 
 
 def _zf_is_defined(work, short, cache):
-    
+    """The judgment defines `short` as its own short name for a work: `("Trindade, Cane &
+    Lunney")`, `("Gold on Statistical Evidence")`, `("Malek & Quest, Jack: Documentary Credits")`."""
     key = "\x00" + short
     if key not in cache:
         n = r"\s+".join(re.escape(w) for w in short.split())
@@ -3127,7 +3176,7 @@ _ZF_R20_TITLE = re.compile(
     r"|\bImpact\s+Assessment\b|\bDefinitive\s+Guideline\b|\bGuidance\s+Document\b|\bOfficial\s+Voter\s+Information\b"
     r"|\bFindings\s+(?:and|&)\s+Recommendations\b|\bExplanatory\s+Notes\b|\bStatement\s+of\s+Policy\s+by\s+the\s+Government\b"
     r"|\bReport\s+(?:of|on)\s+the\s+[^,;()]{3,70}\bInquiry\b|\bRapport\s+(?:Faribault|du\s+groupe)\b")
-                                                                                              
+                                                                                             
                                                                                                      
                                                                                               
 _ZF_R20_NOT = re.compile(
@@ -3145,7 +3194,7 @@ _ZF_REF_FILL = frozenset(("of", "the", "and", "for", "on", "to", "in", "into", "
 
 
 def _zf_ref_left(pre):
-    
+    """The part of `pre` that belongs to the reference a match stands in (see `_ZF_R20_BODY`)."""
     cut = 0
     for m in _ZF_REF_STOP.finditer(pre):
         cut = m.end()
@@ -3181,7 +3230,7 @@ def _zf_ref_left(pre):
 
 
 def _zf_official(pre, ts, after, quoted):
-    
+    """True where the printed reference names a government or official body (R20)."""
     left = _zf_ref_left(pre)
     ref = left + ts
     if _LAW_REFORM_BODY.search(ref) or _ZF_R20_NOT.search(ref):
@@ -3216,7 +3265,8 @@ def _zf_official(pre, ts, after, quoted):
 
 
 def _zf_is_party(work, name, cache):
-    
+    """The judgment itself uses `name` as a party: `Snell v. Farrell`, `R. v. McGregor`, or as a
+    defined short name: `(collectively, "Bentham")`."""
     if name not in cache:
         n = re.escape(name)
         cache[name] = bool(re.search(
@@ -3226,7 +3276,8 @@ def _zf_is_party(work, name, cache):
 
 
 def _zf_party_before(pre):
-    
+    """`... v. United Association of Journeymen and Apprentices of the | Plumbing and Pipefitting
+    Industry`: a versus, then nothing but name words up to the match."""
     s = str(pre or "")
     i = max(s.rfind(" v "), s.rfind(" v. "))
     if i < 0:
@@ -3464,7 +3515,7 @@ def _ed_toks(k):
 
 
 def _ed_content(k):
-    
+    """the key's author and title words: no year, edition, imprint, connector, initial, editor"""
     s = " ".join(_ed_toks(k))
     s = re.sub(r"(?:\b[a-z]{1,2}\.?\s+){0,3}[a-z][a-z'\-]+\s+(?:gen|eds?)\.?(?=\s|$)", " ", s)
     out = []
@@ -3483,7 +3534,7 @@ def _ed_years(k):
 
 
 def _ed_eponym(k):
-    
+    """(names, name, title words) for `<names> <name>'s <title>` / `<names> <name> on <title>`"""
     t = " ".join(_ed_toks(k))
     m = _ED_EPON.search(t + " ")
     if not m or m.group(1) in _ED_EPON_NOT:
@@ -3496,13 +3547,13 @@ def _ed_eponym(k):
 
 
 def _ed_journalish(k):
-    
+    """a volume or page beside the year (an edition `35 th` and a paper `no 7` are not)"""
     s = re.sub(r"\b\d{1,3} ?(?:th|st|nd|rd|d)\b|\bno\.? ?\d+\b", " ", " ".join(_ed_toks(k)))
     return any(re.fullmatch(r"\d+", w) and not _ED_YEAR.match(w) for w in s.split())
 
 
 def _ed_numbers(k):
-    
+    """paper numbers: `report no 7`, `seventh report`"""
     s = " ".join(_ed_toks(k))
     out = set(re.findall(r"\bno\.? ?(\d+)\b", s))
     out |= {_ED_ORDW[w] for w in re.findall(r"\b(" + "|".join(_ED_ORDW) + r") (?:interim |final )?report\b", s)}
@@ -3619,7 +3670,7 @@ def _ed_d7(k, o, work):
 
 
 def _acad_ed_merge(distinct, work):
-    
+    """`distinct` with the second key of one book (rule 7) taken out; see the note above."""
     keys, dead, cache = list(distinct), set(), {}
     bl = [k for k in keys if _ED_BLK.search(k) and not re.search(r"\bnew commentaries|\bstephen\b|criminal practice", k)]
     if bl:
@@ -3767,7 +3818,7 @@ def _ls_short_merge(distinct, work):
                                                                                                       
                                                                                                    
                                                                             
-                                                                                                         
+                                                                                                        
                                                                                                        
                                                                                                      
                                                                                                        
@@ -3798,7 +3849,7 @@ def _ls_drop(work, s, e, ts, pre):
 
 
 def _acad_fp_drop(work, s, e, ts, pre, cache):
-    
+    """True where the match is one of the ACAD_FP not-a-work forms (see the notes above)."""
     if _FP_RECORDS.search(ts):
         return True
                                                                                                      
@@ -3901,7 +3952,7 @@ def _acad_fp_drop(work, s, e, ts, pre, cache):
 
 
 def _zf_round2(work, s, e, t, ts, ij, vouched, cache, pre, after, quoted, trimmed):
-    
+    """None to drop the match, (s, e, t) to re-read it from a new start, True to leave it."""
                                                                                                           
                                                                                                       
     if not ENCYCLOPAEDIAS_IN and ("Stair Memorial Encyclopaedia" in ts
@@ -3993,7 +4044,8 @@ def _zf_round2(work, s, e, t, ts, ij, vouched, cache, pre, after, quoted, trimme
 
 
 def _zf_fix(work, s, e, t, ij, vouched, cache, _trimmed=False):
-    
+    """None where the match is one of the adjudicated not-a-work forms; else (s, e, t), with a
+    sentence lead-in trimmed off the front where the file prints one."""
     ts = re.sub(r"\s+", " ", str(t or "")).strip()
     if not ts:
         return s, e, t
@@ -4210,7 +4262,7 @@ def _zf_skel_raw(k):
 
 
 def _zf_one_work(a, b, keys):
-    
+    """True where keys `a` and `b` name one work (forms E1-E7 above)."""
     if ZF_ROUND2:
         for _x, _y in ((a, b), (b, a)):
                                                                                                    
@@ -4370,7 +4422,7 @@ _ZF_CHAPTER_HEAD = re.compile(
 
 
 def _zf_gap_ok(gap):
-    
+    """True where the text between two matches is title text only."""
     if len(gap) > 90 or any(c in gap for c in ";[]"):
         return False
     toks = gap.split()
@@ -4389,7 +4441,7 @@ def _zf_gap_ok(gap):
 
 
 def _zf_stitch(t1, gap, t2, j1, j2):
-    
+    """True where match `t1`, the text `gap` and match `t2` are one printed citation."""
     a = re.sub(r"\s+", " ", str(t1)).strip()
     b = re.sub(r"\s+", " ", str(t2)).strip()
     g = gap.strip()
@@ -4457,7 +4509,7 @@ def _zf_stitch(t1, gap, t2, j1, j2):
 
 
 def _zf_same_work(distinct, alias):
-    
+    """`distinct` with a second key for one work folded into the first (the fuller one is kept)."""
     order = sorted(distinct, key=lambda k: (len(_zf_skel(k)), len(k), k), reverse=True)
     kept = []
     for k in order:
@@ -4617,13 +4669,14 @@ _MOD_DICT = re.compile(
 _MOD_PROSE = re.compile(
     r"^(?:For|See|In|As|Also|Cf|Compare|Contra|E\.?g|Thus|But|And|The\s+court|This)\b|"
     r"\b(?:were|was|is|are|been|imposed|held|example|such\s+as|cited|quoted|which|that)\b")
-                                                                                                
+                                                                                               
                                                                                     
 _MOD_MPC = re.compile(r"\b(?:ALI|American\s+Law\s+Institute),\s+Model\s+Penal\s+Code\b")
 
 
 def _mod_names_only(work, w):
-    
+    """`Maddaugh and McCamus` -- capitalised words joined by and/&, each printed elsewhere after
+    an initial (`John D. McCamus`): authors, not a title."""
     ws = re.split(r"\s+(?:and|&)\s+|,\s+", w.strip())
     if len(ws) < 2 or not all(re.fullmatch(r"[A-Z][A-Za-z'’\-]+", x) for x in ws):
         return False
@@ -4639,7 +4692,7 @@ def _mod_book_ok(work, g):
 
 
 def _mod_matches(work, held):
-    
+    """ACAD_MOD's matches (s, e, text, is_b6, is_journal) over `work`, none overlapping `held`."""
     out = []
 
     def _free(s, e):
@@ -4683,34 +4736,37 @@ def _mod_matches(work, held):
 
 
 def academic_works(text, groups=False):
-    
-    """The DISTINCT academic works found, by name, rather than how many there are.
-
-    A count cannot say which work is wrong. Diffing the engine against the reference's own named
-    lists is what showed that the citation side was making roughly equal numbers of misses and
-    false counts that offset to a total looking almost exact -- and the same question could not
-    be asked of the academic side at all, because nothing here returned the names. This is the
-    counterpart of report_titles() below, and count_academic_refs() is now its length.
-
-    Detection layers:
-      J1–J6 : hand-crafted regex patterns (journals by name, abbrev, US law schools)
-      J7     : Cardiff ACADEMIC abbreviations (3,075 entries) in citation context
-               (YYYY) VOL ABBREV PAGE  or  [YYYY] VOL ABBREV PAGE
-      B1–B6  : named treatises / publisher patterns
-    Pre-processing:
-      - Dotted abbreviation forms normalised: L.Q.R. → LQR, M.L.R. → MLR
-    Deduplication:
-      Pass 1 (span): overlapping matches → keep longest at each position
-      Pass 2 (text): same work cited N times at different positions → count once
-                     (_norm_key normalises case, &/and, edition ordinals, possessives)
-    Guards (B3/B4/B5): judicial title lookahead (?!\\s+(?:J|LJ|CJ|MR|JA|JSC|JJ)\\b)
-      prevents treatise bare-names from matching judge references (Underhill LJ, McGregor J etc.)
-    B6: standalone publisher-in-parens pattern; proximity dedup (Pass 1b) skips any B6 match
-      that falls within 200 chars after a non-B6 match to prevent double-counting when a B3/B4/B5
-      treatise name and its publisher paren both match the same work.
-    Pass 1c: v-case guard — short bare-name B3 matches adjacent to " v " or "v." in context
-      (±60 chars) are filtered as case party names, not treatise references.
+    """With groups=True, each work is returned as the SET OF NAMES it was found
+    under -- the counterpart of jr_citations.groups(). Default behaviour is
+    unchanged: a flat list of keys, which is what every current caller expects.
     """
+                                                                                  
+
+                                                                                             
+                                                                                              
+                                                                                               
+                                                                                              
+                                                                                      
+
+                     
+                                                                                    
+                                                                                 
+                                                                 
+                                                   
+                   
+                                                                        
+                  
+                                                                        
+                                                                                
+                                                                                      
+                                                                                   
+                                                                                                 
+                                                                                            
+                                                                                                 
+                                                                     
+                                                                                           
+                                                                            
+       
                                                                                              
                                                                         
                                                                                                  
@@ -5269,7 +5325,7 @@ def academic_works(text, groups=False):
             if not (_ENCYCLOPAEDIA_RE.search(_r47_left(s) + work[s:e])
                     or _ENCYCLOPAEDIA_BARE.search(str(t)))
         ]
-                                                                                          
+                                                                                         
                                                                                       
                                                                                             
                                                           
@@ -5279,7 +5335,7 @@ def academic_works(text, groups=False):
         if any(s < ue and e > us for us, ue, *_ in used):
             continue
         used.append((s, e, t, ib6, ij))
-                                                                                          
+                                                                                         
                                                                                    
                                                                                               
                                                                                           
@@ -5915,7 +5971,7 @@ def academic_works(text, groups=False):
                 if k in al:
                     names |= {surv} | al
             out.append(frozenset(names))
-        return _r47_final(out)
+        return _r107_final(_r106_final(_r47_final(out), text, groups=True), text, groups=True)
                                                                                 
                                                                                            
                                                                                         
@@ -5951,22 +6007,200 @@ def academic_works(text, groups=False):
             if k not in _outp:
                 _outp.append(k)
         distinct = _outp
-    return _r47_final(distinct)
+    return _r107_final(_r106_final(_r47_final(distinct), text), text)
 
+
+                                                                                                                 
+                                                                                                                   
+                                                                                                            
+                                                                                                                 
+                                                                                                                
+                                                                                                                
+                                                                                                                 
+                                                                                                       
+                                                                                                                 
+                                                                                                                
+R106_ON = os.environ.get("JR_R106", "1") != "0"
+_AP106 = r"[’'`]?\s*s?[’'`]?"
+_LEGAL_DICT_RE = re.compile(
+    r"\bBlack" + _AP106 + r"\s+Law\s+Dictionary\b"
+    r"|\bJowitt" + _AP106 + r"\s+Dictionary\s+of\s+English\s+Law\b"
+    r"|\bStroud" + _AP106 + r"\s+Judicial\s+Dictionary\b"
+    r"|\bWords\s+(?:and|&)\s+Phrases\s+(?:Legally|Judicially)\s+Defined(?:\s+in\s+Canadian\s+Courts)?\b"
+    r"|(?<=\d\s)Words\s+(?:and|&)\s+Phrases\b"
+    r"|\bWords\s+(?:and|&)\s+Phrases(?=\s*(?:,\s*Permanent|\(\s*(?:perm|\d)|,?\s*vol))"
+    r"|\bBouvier" + _AP106 + r"\s+(?:Law\s+)?Dictionary\b"
+    r"|\bWharton" + _AP106 + r"\s+Law\s+Lexicon\b"
+    r"|\bOsborn" + _AP106 + r"\s+(?:Concise\s+)?Law\s+Dictionary\b"
+    r"|\bBallentine" + _AP106 + r"\s+Law\s+Dictionary\b"
+    r"|\bMozley\s+(?:&|and)\s+Whiteley" + _AP106 + r"\s+Law\s+Dictionary\b"
+    r"|\bTomlins" + _AP106 + r"\s+Law\s+Dictionary\b"
+    r"|\bJacob" + _AP106 + r"\s+(?:New\s+)?Law\s+Dictionary\b"
+    r"|\bSweet" + _AP106 + r"\s+Dictionary\s+of\s+English\s+Law\b"
+    r"|\bBurrows" + _AP106 + r"\s+Words\s+(?:and|&)\s+Phrases\b"
+    r"|\bCowel" + _AP106 + r"\s+(?:Law\s+Dictionary|Interpreter)\b"
+    r"|\b(?:Butterworths\s+)?(?:Concise\s+)?Australian\s+Legal\s+Dictionary\b"
+    r"|\bEncyclopa?edic\s+Australian\s+Legal\s+Dictionary\b"
+    r"|\bAustralian\s+Law\s+Dictionary\b"
+    r"|\bOxford\s+Dictionary\s+of\s+Law\b"
+    r"|\bDictionary\s+of\s+(?:Modern\s+)?Legal\s+Usage\b"
+    r"|\b(?:Dictionary\s+of\s+Canadian\s+Law|Canadian\s+Law\s+Dictionary|New\s+Zealand\s+Law\s+Dictionary)\b"
+    r"|\bDictionary\s+of\s+(?:English|Scots|Scottish|Australian|Irish|Roman)\s+Law\b"
+    r"|\b[A-Z][a-z]+" + _AP106 + r"\s+(?:Law|Legal)\s+Dictionary\b")
+_GEN_ENC_KEY = re.compile(r"(?i)encyclop(?!\w*dist)|wikipedia|britannica|\bworld\s+book\b")
+                                                                                                                   
+                                                                                                                       
+_LEGAL_SUBJ = re.compile(r"(?i)\blaws?\b|legal|juris|\bforms\b|precedent|halsbury|statut|\bstair\b|\bcourts?\b|\btax|comparative|\bpublic\b|procedure|juridi|droit|recht|\bgreen\b|parliament|\bcomp\.?\s+l\b"
+                         r"|\bcrim|justice|constitution|conveyanc|pleading|practice|\brights\b|\btreat(?:y|ies)\b")
+
+
+def _r106_name_out(k, text=None):
+    """R106: the key of a general (non-legal) encyclopaedia.
+    ⚠ (24 Nov 2026, Master delta) THE KEY CAN STOP SHORT OF THE WORD THAT MAKES IT LEGAL: `encyclopaedia of banking` is
+    Cresswell's Encyclopaedia of Banking Law, `sweet maxwell encyclopedia` Sweet & Maxwell's Encyclopedia of
+    Employment Law, `encyclopaedia of planning` the Encyclopaedia of Planning Law and Practice -- while Munn's
+    Encyclopedia of Banking and Finance is not legal. So before a key goes, the full title is read from the judgment:
+    a printed encyclopaedia title that carries the key's own words and a legal word keeps it."""
+    k = str(k)
+    if not (_GEN_ENC_KEY.search(k) and not _LEGAL_SUBJ.search(k)):
+        return False
+    if text:
+        words = [w for w in re.findall(r"[a-z]{3,}", k.lower())
+                 if not w.startswith("encyclop") and w not in ("the", "and", "new", "vol", "eds")]
+        for m in re.finditer(r"(?i)encyclop\w*\b[^.;()\[\]\n]{0,60}", text):
+            pre = re.split(r"[.;:)\]]\s", text[max(0, m.start() - 30):m.start()])[-1]                                     
+            title = (pre + m.group()).lower()
+            if _LEGAL_SUBJ.search(m.group()) and words and all(w in title for w in words[:2]):
+                return False
+    return True
+
+
+def _r106_norm(t):
+    t = re.sub(r"[’'`]|\bs\b|\bbutterworths\s+|\bconcise\s+", "", str(t).lower())
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def _r106_legal_dicts(text):
+    seen, out, last = set(), [], -10
+    for m in _LEGAL_DICT_RE.finditer(text or ""):
+                                                                                               
+        if m.start() <= last + 4:
+            last = m.end()
+            continue
+        last = m.end()
+        t = re.sub(r"\s+", " ", m.group()).strip()
+        k = _r106_norm(t)
+        if k not in seen:
+            seen.add(k)
+            out.append(t)
+    return out
+
+
+def _r106_final(out, text, groups=False):
+    if not R106_ON:
+        return out
+    res = []
+    for k in out:
+        if isinstance(k, (set, frozenset, list, tuple)):
+            names = [n for n in k if not _r106_name_out(n, text)]
+            if names:
+                res.append(type(k)(names) if not isinstance(k, list) else names)
+        elif not _r106_name_out(k, text):
+            res.append(k)
+    have = _r106_norm(" | ".join(" ".join(map(str, k)) if isinstance(k, (set, frozenset, list, tuple)) else str(k)
+                                 for k in res))
+    for d in _r106_legal_dicts(text):
+        if _r106_norm(d) not in have:
+            res.append(frozenset({d}) if groups else d)
+    return res
+
+                                                                                                                  
+                                                                                                                         
+                                                                                                                  
+                                                                                                                      
+                                                                                                                   
+                                                                                                                    
+                                                                                                                 
+                                                                                                                  
+                                                                                                             
+                                                                                                                      
+                                                                                                            
+                            
+R107_ON = os.environ.get("JR_R107", "1") != "0"
+_PL_BODY = re.compile(
+    r"Congressional\s+Research\s+Service|\bCRS\s+Report|House\s+of\s+(?:Commons|Lords)\s+Library|Parliamentary\s+Library"
+    r"|Library\s+of\s+Parliament|Parliamentary\s+(?:Information\s+and\s+)?Research\s+(?:Service|Branch)")
+_PL_TYPE = re.compile(
+    r"(?i)\b(?:Research\s+Paper|Background\s+Paper|Briefing\s+Paper|Research\s+Note|Research\s+Brief|Current\s+Issues\s+Brief"
+    r"|Standard\s+Note|CRS\s+Report|Report\s+for\s+Congress|Briefing\s+No|Debate\s+Pack|Research\s+Briefing|Insight|In\s+Focus)\b"
+    r"|\b(?:BP|PRB|RP|CIB|SN)[\s-]?\d")
+_PL_OUT = re.compile(r"(?i)Legislative\s+Summary|\bBills?\s+Digest|\bAlert\s+Digest|Parliamentary\s+Handbook"
+                     r"|\bBill\s+C[\s-]?\d|\bBill\s+\d{4}\b|\bBill\s+No\b")
+_PL_ID = re.compile(
+    r"(?i)\b(?:Research\s+Paper|Background\s+Paper|Briefing\s+Paper|Research\s+Note|Research\s+Brief|Current\s+Issues\s+Brief"
+    r"|Standard\s+Note|CRS\s+Report)\s*(?:No\.?\s*)?([A-Z]{0,3}[\s-]?\d[\w./-]*(?:,?\s+(?:19|20)\d{2}(?:-\d{2})?)?)"
+    r"|\b((?:BP|PRB|RP|CIB|SN)[\s-]?\d[\w-]*)|\b(R[LS]?\d{4,5})\b")
+_PL_QTITLE = re.compile(r"[“\"]([^”\"]{8,140})[”\"]")
+
+
+def _r107_papers(text):
+    """(key, display) for each parliamentary-library research paper cited."""
+    out, seen = [], set()
+    for m in _PL_BODY.finditer(text or ""):
+        a, b = max(0, m.start() - 260), min(len(text), m.end() + 260)
+                                                                                           
+        left = text[a:m.start()]
+        cut = max(left.rfind("\n\n"), left.rfind(". "), left.rfind("; "), left.rfind("]"))
+        if cut >= 0:
+            left = left[cut + 1:]
+        right = text[m.end():b]
+        stop = [i for i in (right.find("\n\n"), right.find("; "), right.find(". See"), right.find(".\n")) if i >= 0]
+        if stop:
+            right = right[:min(stop)]
+        win = left + m.group() + right
+        if re.search(r"\bv\.?\s+(?:the\s+)?(?:Library\s+of\s+Parliament|Congressional)", win):
+            continue
+        if _PL_OUT.search(win) or not _PL_TYPE.search(win):
+            continue
+        i = _PL_ID.search(win)
+        q = _PL_QTITLE.search(win)
+        ident = next((g for g in (i.groups() if i else ()) if g), None)
+        key = (re.sub(r"[\s.]+", " ", ident).strip().lower() if ident else
+               (q.group(1).strip().lower()[:80] if q else re.sub(r"\s+", " ", win).strip().lower()[:80]))
+        if key in seen:
+            continue
+        seen.add(key)
+        body = re.sub(r"\s+", " ", m.group())
+        label = re.sub(r"\s+", " ", i.group(0)).strip() if i else (q.group(1) if q else "research paper")
+        out.append((key, body + ", " + label.strip()))
+    return out
+
+
+def _r107_final(out, text, groups=False):
+    if not R107_ON:
+        return out
+    res = list(out)
+    have = " | ".join(" ".join(map(str, k)) if isinstance(k, (set, frozenset, list, tuple)) else str(k) for k in res).lower()
+    for key, disp in _r107_papers(text):
+        if key[:40] in have:
+            continue
+        res.append(frozenset({disp}) if groups else disp)
+    return res
 
                                                                                                 
                                                                                                   
                                                                                              
                                                                                                
                                                                                                      
-                                                                                                                       
+                                                                                                                      
                                                                                                        
                                                                                                      
                                                                                                            
 _R47_KEY = re.compile((r"(?!x)x" if ENCYCLOPAEDIAS_IN else r"\bhalb?sbury\s*[’']?\s*s?[’']?\s+statutes\b") +
                       r"|^\s*(?:in\s+)?halsbury\b(?!\s*[’']?\s*s?[’']?\s+(?:the\s+)?(?:laws?|statutes)\b)"
                       r"|\bhalsburys\b(?!\s*[’']?\s+(?:the\s+)?laws?\b)"
-                      r"|\b(?:black|bouvier|stroud|jowitt|wharton|osborn)\s*[’']?\s*s?\s+(?:law\s+|judicial\s+)?dicti\s?onary\b",
+                      + ("" if R106_ON else                                                  
+                      r"|\b(?:black|bouvier|stroud|jowitt|wharton|osborn)\s*[’']?\s*s?\s+(?:law\s+|judicial\s+)?dicti\s?onary\b"),
                       re.I)
 
 
@@ -6040,7 +6274,9 @@ def _r47_final(distinct):
 
 
 def count_academic_refs(text):
-    
+    """Count academic references (journals + books) using two-pass deduplication.
+    Single source of truth — imported by build_master_2.py and validate_cardiff.py.
+    The detection layers are documented on academic_works(), of which this is the length."""
     return len(academic_works(text))
 
 
@@ -6132,7 +6368,7 @@ _ORD = r"\d{1,2}\s*(?:st|nd|rd|th)\s+ed(?:n|ition)?\b"
                                                                                
                                                                                            
                                                                              
-                                                                                   
+                                                                                        
                                                                                          
                                                                                           
                                                                        
@@ -6211,7 +6447,7 @@ _BARE_YEAR_BOOK = re.compile(
                                                       
     r"([A-Z][A-Za-z'’\-]+(?:\s+[A-Za-z'’:\-]+){1,14})\s*,\s*(?:1[89]|20)\d{2}\b")
 
-                                                                                                  
+                                                                                             
                                                                                              
                                                                                              
                                                                                        
@@ -6255,7 +6491,7 @@ _NAME_ON_PROSE = re.compile(
                                                                              
                                      
  
-                                                                                       
+                                                                                      
                                                                                       
                                                                                      
                                                                     
@@ -6336,10 +6572,10 @@ _RESEARCH_QUOTED = re.compile(
                                                                                            
                       
                                                      
-                                                                                
+                                                                               
                                 
                                                                                               
-                                                                                               
+                                                                                          
                                                                                   
 _RESEARCH_UNQUOTED = re.compile(
     r"\b[A-Z][A-Za-z'’\-]+(?:[\s:]+[A-Za-z'’\-]+){1,11}" + _RESEARCH_GAP + _RESEARCH_BODY)
@@ -6371,7 +6607,7 @@ _PUBLISHER_EDITION = re.compile(
 
 
 def _publisher_edition(s):
-    
+    """True for '(Stevens & Sons Limited, 5th Ed, 1890)' -- an imprint plus an edition."""
     return bool(_PUBLISHER_EDITION.search(str(s or "")))
 
 
@@ -6389,7 +6625,7 @@ _PUBLISHER_YEAR = re.compile(
 
                                                             
                                                                                               
-                                                                                                
+                                                                                           
                                                                                    
                                                                                  
 _NOT_SCHOLARSHIP = re.compile(r"(?:dictionar|thesaur|word\s+finder)", re.I)
@@ -6451,7 +6687,7 @@ _REFERENCE_WORK = re.compile(
                                                                                              
                                                                                            
                                                                                          
-                                                                                        
+                                                                                       
     r"|Encyclopa?edia\s+of\s+[A-Z][A-Za-z]{2,}"
                                                                                             
     r"|Halb?sbury['’`]?s?\s+Statutes(?:\s+of\s+[A-Z][A-Za-z]{2,})?"
@@ -6757,7 +6993,7 @@ _FULLNAME_CITE_PRE = re.compile(
 
 
 def _flat_title(t):
-    
+    """The comparison form of a periodical's name: letters and digits, upper case."""
     return re.sub(r"[^A-Z0-9]+", "", str(t or "").upper())
 
 
@@ -7020,7 +7256,24 @@ _OPINION_HEADER = re.compile(
 
 
 def _us_bluebook(s):
-    
+    """True where the WHOLE string is the Bluebook 'A. Author, Title <pinpoint> (year)'.
+
+    ⚠️ THIS IS A VOUCHER, AND IT IS ANCHORED FOR THAT REASON. `_is_not_a_work` is applied
+    twice over -- once to the match and once to the 130 characters of prose in front of it --
+    and the second arm reads the SENTENCE THAT INTRODUCES the citation, which in a judgment
+    discussing a commission or a statute contains the very words the veto bans:
+        "... on which the Royal Commission drew in reaching its conclusions and making its
+         recommendations (see, e.g., B. Slattery, 'First Nations and the Constitution: A
+         Question of Trust' (1992), 71 Can. Bar Rev. 261 ...)"                [2024] SCC 10
+    Slattery's article was discarded on the strength of a Royal Commission belonging to the
+    sentence, not to him. The module already carries exactly this exemption for
+    `_authored_edition`, `_authored_article` and `_authored_book`, whose comment says the
+    match's own credentials outrank anything in the surrounding sentence; B19's shape is the
+    same kind of credential and `_AUTHORED_BOOK` cannot see it, because it demands a CAPITAL
+    immediately after the author comma and a quoted title opens with a quotation mark.
+    `match`, not `search`, so a citation merely mentioned inside a longer span of prose
+    vouches for nothing.
+    """
     return bool(_US_BLUEBOOK_BOOK.match(str(s or "").strip()))
 
 
@@ -7095,7 +7348,12 @@ _PERIODICAL_NAME_WORD = re.compile(r"[A-Za-z][A-Za-z'’&.\-]*")
 
 
 def _names_a_periodical(name):
-    
+    """True where the journal name, read on its own, says it is a scholarly periodical.
+
+    Two or more words, one of them a periodical word, and none of the gazettes. The
+    two-word floor matters: "(1998) Review 12" is a pinpoint into something else, and a
+    single bare periodical word is never a journal's whole name.
+    """
     n = " ".join(str(name or "").split())
     if len(_PERIODICAL_NAME_WORD.findall(n)) < 2:
         return False
@@ -7105,13 +7363,17 @@ def _names_a_periodical(name):
 
 
 def set_cardiff_acronyms(acronyms):
-    
+    """Install the 3,075-entry journal acronym list. Optional."""
     global CARDIFF_ACAD_ABBREVS
     CARDIFF_ACAD_ABBREVS = set(acronyms or ())
 
 
 def set_cardiff_titles(titles):
-    
+    """Install the 2,113-entry FULL TITLE list -- the counterpart of the acronyms.
+
+    `_FULLNAME_CITE` uses it as its positive anchor exactly as the abbreviation layer
+    uses `CARDIFF_ACAD_ABBREVS`.
+    """
     global CARDIFF_ACAD_TITLES
     CARDIFF_ACAD_TITLES = {_flat_title(t) for t in (titles or ()) if _flat_title(t)}
 
@@ -7586,7 +7848,7 @@ _HIS_BOOK = re.compile(r"\b(?:his|her|their)\s+(?:(?:influential|leading|well-kn
                        r"(?:(?:\s*[-–:]\s*|\s+)" + _TW + r"){2,12}")
                                                                                                                         
 _TITLE_BY_AUTHOR_ED = re.compile(r"\b" + _TITLE + r"\s+by\s+" + _PERSON + r",?\s+" + _ED)
-                                                                                                                       
+                                                                                                                      
                                                    
                                                                                        
                                                                        
@@ -7699,7 +7961,12 @@ def _treatise_key_norm(key):
 
 
 def set_treatise_dict(entries):
-    
+    """Compile 'Author Title' keys into patterns tolerant of how they are actually cited.
+
+    One key covers 'Hogg on Constitutional Law of Canada', 'Hogg, Constitutional Law of
+    Canada' and "Hogg's Constitutional Law of Canada", because the separator between the
+    author and the title varies with the citing judge, not with the work.
+    """
     global TREATISE_PATTERNS
     pats = []
     for key in entries or ():
@@ -7731,7 +7998,7 @@ _TREATISE_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 
 
 def load_treatise_dict(path=None):
-    
+    """Load the shipped treatise dictionary. Returns the number of patterns compiled."""
     p = path or _TREATISE_JSON
     try:
         with open(p, encoding="utf-8") as fh:
@@ -7856,7 +8123,11 @@ _REPORT_TITLE = [
 
 
 def count_reports(text):
-    
+    """Distinct reports cited -- law reform, committee, parliamentary and agency.
+
+    Deduplicated the same way the academic counter is: a report cited five times counts
+    once, and a short form is merged into the long form that contains it.
+    """
     work = _normalize_dotted_abbrevs(text or "")
     keys = set()
     for rx in _REPORT_TITLE:
@@ -7911,12 +8182,12 @@ _NOT_A_REPORT = re.compile(
 
 
 def _fold_command_paper(k):
-    
+    """'cmd 6902' and 'cmnd 6902' are the same paper cited two ways -- fold the series word."""
     return re.sub(r"^cm(?:nd|d)?\.?\s*(\d{3,5})$", r"cmd \1", k.strip())
 
 
 def report_titles(text):
-    
+    """The reports themselves, for checking a count against the judgment."""
     work = _normalize_dotted_abbrevs(text or "")
     seen, out = set(), []
     for rx in _REPORT_TITLE:
