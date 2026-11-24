@@ -1,0 +1,17 @@
+Case: 2022-03-04 - FBI v. Fazaga (595 U.S. 344)_cleaned_3.0
+
+## Case Citations
+1. General Dynamics Corp. v. United States | 563 U.S. 478
+2. Tenet v. Doe | 544 U.S. 1
+3. United States v. Reynolds | 345 U.S. 1
+4. Totten v. United States | 92 U.S. 105
+5. Clapper v. Amnesty Int’l USA | 568 U.S. 398
+6. Fazaga v. FBI (District Court state-secrets ruling) | 884 F. Supp. 2d 1022
+7. Fazaga v. FBI (District Court FISA ruling) | 885 F. Supp. 2d 978
+8. Fazaga v. FBI (Court of Appeals) | 965 F.3d 1015
+9. Wikimedia Foundation v. NSA | 14 F. 4th 276
+10. Norfolk Redevelopment and Housing Authority v. Chesapeake & Potomac Telephone Co. of Va. | 464 U.S. 30
+11. Jennings v. Rodriguez | 583 U.S. ___
+
+## Academic References
+1. D. Kris & J. Wilson, National Security Investigations & Prosecutions, 3d ed. (2019), vol. 2, §30:4
