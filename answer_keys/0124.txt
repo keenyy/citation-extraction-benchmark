@@ -1,0 +1,128 @@
+Case: Commonwealth v Mewett [1997] HCA 29
+
+## Case Citations
+1. The Commonwealth v Evans Deakin Industries Ltd | [1986] HCA 51 | (1986) 161 CLR 254
+2. McKain v R W Miller & Co (SA) Pty Ltd | [1991] HCA 56 | (1991) 174 CLR 1
+3. Commonwealth v Mewett (Foster J) | [1994] FCA 1444 | (1994) 126 ALR 391
+4. Commonwealth v Mewett (Full Federal Court) | (1995) 59 FCR 391 | 140 ALR 99
+5. Georgiadis v Australian and Overseas Telecommunications Corporation | (1994) 179 CLR 297
+6. The State of South Australia v The State of Victoria | [1911] HCA 17 | (1911) 12 CLR 667
+7. The Commonwealth v New South Wales | (1923) 32 CLR 200
+8. Mutual Pools & Staff Pty Ltd v The Commonwealth | [1994] HCA 9 | (1994) 179 CLR 155
+9. Commissioner for Railways (Qld) v Peters | (1991) 24 NSWLR 407
+10. Werrin v The Commonwealth | [1938] HCA 3 | (1938) 59 CLR 150
+11. Bank of NSW v The Commonwealth | [1948] HCA 7 | (1948) 76 CLR 1
+12. Marbury v Madison | [1803] USSC 16 | 5 US 137 (1803)
+13. Federal Commissioner of Taxation v Official Liquidator of E O Farley Ltd | [1940] HCA 13 | (1940) 63 CLR 278
+14. The Municipal Council of Sydney v The Commonwealth | [1904] HCA 50 | (1904) 1 CLR 208
+15. South Australia v The Commonwealth | [1962] HCA 10 | (1962) 108 CLR 130
+16. The Commonwealth v Cigamatic Pty Ltd (In Liquidation) | [1962] HCA 40 | (1962) 108 CLR 372
+17. The Commonwealth v Baume | [1905] HCA 11 | (1905) 2 CLR 405
+18. Baume v The Commonwealth | [1906] HCA 92 | (1906) 4 CLR 97
+19. The Commonwealth v Miller | [1910] HCA 46 | (1910) 10 CLR 742
+20. Sargood Bros v The Commonwealth | [1910] HCA 45 | (1910) 11 CLR 258
+21. Musgrave v The Commonwealth | [1936] HCA 80 | (1937) 57 CLR 514
+22. Washington v The Commonwealth of Australia | (1939) 39 SR (NSW) 133
+23. Asiatic Steam Navigation Co Ltd v The Commonwealth | [1956] HCA 82 | (1956) 96 CLR 397
+24. Suehle v The Commonwealth | [1967] HCA 13 | (1967) 116 CLR 353
+25. Maguire v Simpson | [1977] HCA 63 | (1977) 139 CLR 362
+26. Breavington v Godleman | [1988] HCA 40 | (1988) 169 CLR 41
+27. Moore v The Commonwealth | [1958] HCA 53 | (1958) 99 CLR 177
+28. Groves v The Commonwealth | [1982] HCA 21 | (1982) 150 CLR 113
+29. James v The Commonwealth (1939) | [1939] HCA 9 | (1939) 62 CLR 339
+30. Shaw Savill and Albion Co Ltd v The Commonwealth | [1940] HCA 40 | (1940) 66 CLR 344
+31. Downs v Williams | [1971] HCA 45 | (1971) 126 CLR 61
+32. Pitcher v Federal Capital Commission | [1928] HCA 44 | (1928) 41 CLR 385
+33. Parker v The Commonwealth | [1965] HCA 12 | (1965) 112 CLR 295
+34. Johnstone v The Commonwealth | [1979] HCA 13 | (1979) 143 CLR 398
+35. Health Insurance Commission v Peverill | [1994] HCA 8 | (1994) 179 CLR 226
+36. Re Director of Public Prosecutions; Ex parte Lawler | [1994] HCA 10 | (1994) 179 CLR 270
+37. Victoria v The Commonwealth | (1996) 70 ALJR 680 | 138 ALR 129
+38. Burton v Honan | [1952] HCA 30 | (1952) 86 CLR 169
+39. Cohen v Cohen | [1929] HCA 15 | (1929) 42 CLR 91
+40. Bainbridge-Hawker v The Minister of State for Trade and Customs | [1958] HCA 60 | (1958) 99 CLR 521
+41. Pedersen v Young | [1964] HCA 28 | (1964) 110 CLR 162
+42. John Robertson & Co Ltd v Ferguson Transformers Pty Ltd | (1973) 129 CLR 65
+43. Dedousis v Water Board | [1994] HCA 57 | (1994) 181 CLR 171
+44. Maxwell v Murphy | [1957] HCA 7 | (1957) 96 CLR 261
+45. Australian Iron & Steel Ltd v Hoogland | [1962] HCA 13 | (1962) 108 CLR 471
+46. The Commonwealth v Verwayen | (1990) 170 CLR 394
+47. Commonwealth of Australia v Dixon | (1988) 13 NSWLR 601
+48. Gardner v Wallace | [1995] HCA 61 | (1995) 184 CLR 95
+49. Dey v Victorian Railways Commissioners | [1949] HCA 1 | (1949) 78 CLR 62
+50. General Steel Industries Inc v Commissioner for Railways (NSW) | [1964] HCA 69 | (1964) 112 CLR 125
+51. Deputy Federal Commissioner of Taxation v Brown | [1958] HCA 2 | (1958) 100 CLR 32
+52. Pozniak v Smith | [1982] HCA 39 | (1982) 151 CLR 38
+53. M’Elroy v M’Allister | [1948] ScotCS CSIH_4 | [1949] SC 110
+54. Varawa v Howard Smith Co Ltd | [1911] HCA 46 | (1911) 13 CLR 35
+55. Chaff and Hay Acquisition Committee v JA Hemphill and Sons Pty Ltd | [1947] HCA 20 | (1947) 74 CLR 375
+56. Koop v Bebb | [1951] HCA 77 | (1951) 84 CLR 629
+57. Laurie v Carroll | [1958] HCA 4 | (1958) 98 CLR 310
+58. Anderson v Eric Anderson Radio & TV Pty Ltd | [1965] HCA 61 | (1965) 114 CLR 20
+59. Stevens v Head | [1993] HCA 19 | (1993) 176 CLR 433
+60. Tolofson v Jensen | [1994] 3 SCR 1022 | (1994) 120 DLR (4th) 289
+61. Kable v Director of Public Prosecutions (NSW) | [1996] HCA 24 | (1996) 70 ALJR 814 | 138 ALR 577
+62. Thompson v The Queen | [1989] HCA 30 | (1989) 169 CLR 1
+63. Phillips v Eyre | (1870) LR 6 QB 1
+64. Roebuck v Mungovin | [1994] 2 AC 224
+65. Minister of State for the Army v Dalziel | [1944] HCA 4 | (1944) 68 CLR 261
+66. Mills v Fowkes | [1839] EngR 659 | (1839) 5 Bing (NC) 455 | 132 ER 1174
+67. Higgins v Scott | [1831] EngR 106 | (1831) 2 B & Ad 413 | 109 ER 1196
+68. Dingle v Coppen; Coppen v Dingle | [1899] 1 Ch 726
+69. In re Lloyd; Lloyd v Lloyd | [1903] 1 Ch 385
+70. Harris v Commercial Minerals Ltd | [1996] HCA 49 | (1996) 186 CLR 1
+71. Northern Suburbs General Cemetery Reserve Trust v The Commonwealth | [1993] HCA 12 | (1993) 176 CLR 555
+72. Dyson v Attorney-General | [1911] 1 KB 410
+73. R v Mayor, etc, of Blenheim | (1907) 28 NZLR 249
+74. Attorney-General v Nissan | [1969] UKHL 3 | [1970] AC 179
+75. Registrar of the Accident Compensation Tribunal v Federal Commissioner of Taxation | [1993] HCA 1 | (1993) 178 CLR 145
+76. Casberd v The Attorney-General | (1819) 6 Price 411 | 146 ER 850
+77. Windsor and Annapolis Railway Co v The Queen and the Western Counties Railway Co | (1886) 11 App Cas 607
+78. Feather v The Queen | (1865) 6 B & S 257 | [1865] EngR 205 | 122 ER 1191
+79. Uren v John Fairfax & Sons Pty Ltd | [1966] HCA 40 | (1966) 117 CLR 118
+80. A v Hayden | [1984] HCA 67 | (1984) 156 CLR 532
+81. Repatriation Commission v Kirkland | [1923] HCA 18 | (1923) 32 CLR 1
+82. British Medical Association v Greater Glasgow Health Board | [1989] AC 1211
+83. Farnell v Bowman | (1887) 12 App Cas 643
+84. Fencott v Muller | (1983) 152 CLR 570
+85. Deputy Commissioner of Taxation v State Bank (NSW) | [1992] HCA 6 | (1992) 174 CLR 219
+86. State Authorities Superannuation Board v Commissioner of State Taxation (WA) | [1996] HCA 32 | (1996) 71 ALJR 56 | 140 ALR 129
+87. Australian Communist Party v The Commonwealth | [1951] HCA 5 | (1951) 83 CLR 1
+88. State of Tasmania v The Commonwealth of Australia and State of Victoria | [1904] HCA 11 | (1904) 1 CLR 329
+89. Flint v The Commonwealth | [1932] HCA 49 | (1932) 47 CLR 274
+90. McDonald v Victoria | [1937] HCA 60 | (1937) 58 CLR 146
+91. M v Home Office | [1993] UKHL 5 | [1994] 1 AC 377
+92. McDonald v Secretary of State for Scotland | 1994 SLT 692
+93. James v Cowan | [1932] UKPCHCA 2 | (1932) 47 CLR 386
+94. James v The Commonwealth (1936) | [1936] HCA 32 | (1936) 55 CLR 1
+95. McClintock v The Commonwealth | [1947] HCA 39 | (1947) 75 CLR 1
+96. Poulton v The Commonwealth | (1953) 89 CLR 540
+97. Heimann v The Commonwealth | [1935] HCA 73 | (1935) 54 CLR 126
+98. New South Wales v Bardolph | [1934] HCA 74 | (1934) 52 CLR 455
+99. New South Wales v The Commonwealth [No 1] | [1932] HCA 7 | (1932) 46 CLR 155
+100. Crouch v Commissioner for Railways (Q) | [1985] HCA 69 | (1985) 159 CLR 22
+101. Dao v Australian Postal Commission | [1987] HCA 13 | (1987) 162 CLR 317
+102. Deputy Commissioner of Taxation v Moorebank Pty Ltd | [1988] HCA 29 | (1988) 165 CLR 55
+
+## Academic References
+1. Cuppaidge, "The Divisibility of the Crown", (1954) 27 Australian Law Journal 594.
+2. Lumb, "'The Commonwealth of Australia' - Constitutional Implications", (1979) 10 Federal Law Review 287.
+3. Sawer, Australian Federalism in the Courts (1967) at 123–124.
+4. Cowen and Zines, Federal Jurisdiction in Australia, 2nd ed (1978) at 38.
+5. Law Revision Committee, Fifth Interim Report (Statutes of Limitation) (1936), Cmd 5334, par 24.
+6. Derham, Set-off, 2nd ed (1996) at 64–65, 439–440, 505–507.
+7. Story, Commentaries on the Constitution of the United States (1833), vol 1, par 207.
+8. Holdsworth, "The History of Remedies Against the Crown", (1922) 38 Law Quarterly Review 141 (Pt 1), 280 (Pt 2).
+9. Bryson, The Equity Side of the Exchequer (1976) at 160–166.
+10. Spence, The Equitable Jurisdiction of the Court of Chancery (1849), vol 2 at 32–33.
+11. Lewin, A Practical Treatise on The Law of Trusts, 6th ed (1875) at 29.
+12. Holdsworth, A History of English Law, 3rd ed (1944), vol 9 at 40–42.
+13. Robertson, The Law and Practice of Civil Proceedings By and Against the Crown and Departments of the Government (1908) at 337–340, 351.
+14. Ehrlich, "Proceedings Against the Crown (1216–1377)", in Vinogradoff (ed), Oxford Studies in Social and Legal History (1974), vol 6 at 42–44, 127–131.
+15. Bracton on the Laws and Customs of England, Folio 107a–107b, translated with revisions and notes by Thorne (1968), vol 2 at 305–306.
+16. Chitty, A Treatise on the Law of the Prerogatives of the Crown (1820) at 4.
+17. Finn, "Claims Against the Government Legislation", in Finn (ed), Essays on Law and Government, vol 2, The Citizen and the State in the Courts (1996), 25.
+18. Finn, Law and Government in Colonial Australia (1987) at 141–142.
+19. Harrison Moore, "The Crown as Corporation", (1904) 20 Law Quarterly Review 351.
+20. Wade, "Injunctive Relief against the Crown and Ministers", (1991) 107 Law Quarterly Review 4.
+21. Edwards, "Interdict and the Crown in Scotland", (1995) 111 Law Quarterly Review 34.
