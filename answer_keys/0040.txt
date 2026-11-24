@@ -1,0 +1,111 @@
+Case: 2019-11-29 - Kosoian v. Société de transport de Montréal [2019 SCC 59]
+
+## Case Citations
+1. Godin v. Montréal (Ville de) | 2015 QCCQ 5513
+2. Mustapha v. Culligan of Canada Ltd. | 2008 SCC 27 | [2008] 2 S.C.R. 114
+3. Dedman v. The Queen | [1985] 2 S.C.R. 2
+4. R. v. Sharma | [1993] 1 S.C.R. 650
+5. Hill v. Hamilton-Wentworth Regional Police Services Board | 2007 SCC 41 | [2007] 3 S.C.R. 129
+6. Jauvin v. Québec (Procureur général) | [2004] R.R.A. 37
+7. Régie intermunicipale de police des Seigneuries v. Michaelson | [2005] R.R.A. 7
+8. Popovic v. Montréal (Ville de) | 2008 QCCA 2371 | [2009] R.R.A. 1
+9. St. Lawrence Cement Inc. v. Barrette | 2008 SCC 64 | [2008] 3 S.C.R. 392
+10. Bou Malhab v. Diffusion Métromédia CMR inc. | 2011 SCC 9 | [2011] 1 S.C.R. 214
+11. Roberge v. Bolduc | [1991] 1 S.C.R. 374
+12. Chartier v. Attorney General of Quebec | [1979] 2 S.C.R. 474
+13. Lacombe v. André | [2003] R.J.Q. 720
+14. St-Martin v. Morin (Succession de) | 2008 QCCA 2106 | [2008] R.J.Q. 2539
+15. Infineon Technologies AG v. Option consommateurs | 2013 SCC 59 | [2013] 3 S.C.R. 600
+16. Compagnie d'assurance Continental du Canada v. 136500 Canada inc. | [1998] R.R.A. 707
+17. Morin v. Blais | [1977] 1 S.C.R. 570
+18. Harvey v. Trois-Rivières (Ville de) | 2013 QCCA 772 | [2013] R.J.Q. 650
+19. L. (J.) v. Gingues | 2008 QCCA 2242 | 93 C.C.L.T. (3d) 67
+20. R. v. Grant | 2009 SCC 32 | [2009] 2 S.C.R. 353
+21. R. v. Le | 2019 SCC 34 | [2019] 2 S.C.R. 692
+22. R. v. Genest | [1989] 1 S.C.R. 59
+23. R. v. Kokesch | [1990] 3 S.C.R. 3
+24. Gounis v. Ville de Laval | 2019 QCCS 479
+25. Simard v. Amyot | 2009 QCCS 5509
+26. Bellefleur v. Montréal (Communauté urbaine de) | [1999] R.R.A. 546
+27. R. v. Rouleau | 2002 CanLII 7572
+28. R. v. Beaudry | 2007 SCC 5 | [2007] 1 S.C.R. 190
+29. Chaput v. Romain | [1955] S.C.R. 834
+30. Pelletier v. Cour du Québec | [2002] R.J.Q. 2215
+31. Dubé v. Gélinas | 2013 QCCS 1681
+32. Boisvenu v. Sherbrooke (Ville de) | 2009 QCCS 2688
+33. Communauté urbaine de Montréal v. Cadieux | [2002] R.J.D.T. 80
+34. Guimond v. Quebec (Attorney General) | [1996] 3 S.C.R. 347
+35. R. v. Wiley | [1993] 3 S.C.R. 263
+36. Katz Group Canada Inc. v. Ontario (Health and Long-Term Care) | 2013 SCC 64 | [2013] 3 S.C.R. 810
+37. Breslaw v. Montreal (City) | 2009 SCC 44 | [2009] 3 S.C.R. 131
+38. Mackin v. New Brunswick (Minister of Finance) | 2002 SCC 13 | [2002] 1 S.C.R. 405
+39. Beauchemin v. Blainville (Town) | (2003), 231 D.L.R. (4th) 706
+40. Ryan v. Auclair | (1989), 60 D.L.R. (4th) 212
+41. Procureur général du Québec v. Ouellet | 1998 CanLII 12543
+42. Frey v. Fedoruk | [1950] S.C.R. 517
+43. Moore v. The Queen | [1979] 1 S.C.R. 195
+44. R. v. Guthrie | (1982), 21 Alta. L.R. (2d) 1
+45. R. v. Coles | (2003), 221 Nfld. & P.E.I.R. 98
+46. R. v. Houle | (1985), 41 Alta. L.R. (2d) 295
+47. Crépeau v. Yannonie | [1988] R.R.A. 265
+48. Attorney General of Quebec v. Blaikie | [1981] 1 S.C.R. 312
+49. R. v. Latimer | [1997] 1 S.C.R. 217
+50. R. v. Asante-Mensah | 2003 SCC 38 | [2003] 2 S.C.R. 3
+51. Figueiras v. Toronto Police Services Board | 2015 ONCA 208 | 124 O.R. (3d) 641
+52. R. v. Saeed | 2016 SCC 24 | [2016] 1 S.C.R. 518
+53. Solomon v. Québec (Procureur général) | 2008 QCCA 1832 | [2008] R.J.Q. 2127
+54. Pierre-Louis v. Québec (Ville de) | 2014 QCCA 1554
+55. Housen v. Nikolaisen | 2002 SCC 33 | [2002] 2 S.C.R. 235
+56. Prud'homme v. Prud'homme | 2002 SCC 85 | [2002] 4 S.C.R. 663
+57. Entreprises Sibeca Inc. v. Frelighsburg (Municipality) | 2004 SCC 61 | [2004] 3 S.C.R. 304
+58. Welbridge Holdings Ltd. v. Greater Winnipeg | [1971] S.C.R. 957
+59. Papachronis v. Ste-Anne-de-Bellevue (Ville) | 2007 QCCA 770 | 38 M.P.L.R. (4th) 161
+60. R. v. Imperial Tobacco Canada Ltd. | 2011 SCC 42 | [2011] 3 S.C.R. 45
+61. Hinse v. Canada (Attorney General) | 2015 SCC 35 | [2015] 2 S.C.R. 621
+62. Laurentide Motels Ltd. v. Beauport (City) | [1989] 1 S.C.R. 705
+63. Maska Auto Spring Ltée v. Ste-Rosalie (Village) | [1991] 2 S.C.R. 3
+64. Maska Auto Spring Ltée v. Ste-Rosalie (Corp. municipale du village de) | [1988] R.J.Q. 1576
+65. Pincourt (Ville de) v. Construction Cogerex ltée | 2013 QCCA 1773
+66. Chelsea (Municipalité de) v. Laurin | 2010 QCCA 1723
+67. Foley v. Shamess | 2008 ONCA 588 | 297 D.L.R. (4th) 287
+68. Proulx v. Quebec (Attorney General) | 2001 SCC 66 | [2001] 3 S.C.R. 9
+69. Nelles v. Ontario | [1989] 2 S.C.R. 170
+70. Montréal (Ville) v. Lonardi | 2018 SCC 29 | [2018] 2 S.C.R. 103
+71. Doré v. Verdun (City) | [1997] 2 S.C.R. 862
+72. R. v. Campbell | [1999] 1 S.C.R. 565
+73. McCleave v. City of Moncton | (1902), 32 S.C.R. 106
+74. Commission des droits de la personne et des droits de la jeunesse v. Poulin | 2004 CanLII 29094
+75. R. v. Gagné | [1987] R.J.Q. 1008
+76. R. v. Gagné (aff'd) | [1989] 1 S.C.R. 1584
+77. Vigneault v. La Reine | 2002 CanLII 63720
+78. Vigneault v. La Reine (aff'g) | 2001 CanLII 25420
+79. Mongeau v. Montréal (Communauté urbaine) | [2000] J.Q. No. 5823 (QL)
+80. Kosoian v. Société de transport de Montréal (Court of Québec, Le Reste J.C.Q.) | 2015 QCCQ 7948
+81. Kosoian v. Société de transport de Montréal (Quebec Court of Appeal) | 2017 QCCA 1919
+
+## Academic References
+1. A.-R. Nadeau, Droit policier: Loi sur la police annotée et règlements concernant la police (12th ed. 2008)
+2. M. Lacroix, 'Responsabilité civile des forces policières', in JurisClasseur Québec — Responsabilité professionnelle, by A. Bélanger, ed., fasc. 13
+3. J.-L. Baudouin and C. Fabien, 'L'indemnisation des dommages causés par la police' (1989), 23 R.J.T. 419
+4. J.-L. Baudouin, P. Deslauriers and B. Moore, La responsabilité civile (8th ed. 2014), vols. 1 and 2
+5. V. Karim, Les obligations (4th ed. 2015), vol. 1
+6. P.-G. Jobin, 'La violation d'une loi ou d'un règlement entraîne-t-elle la responsabilité civile?' (1984), 44 R. du B. 222
+7. P.-A. Crépeau, L'intensité de l'obligation juridique ou Des obligations de diligence, de résultat et de garantie (1989)
+8. H.-R. Zhou, 'Le test de la personne raisonnable en responsabilité civile' (2001), 61 R. du B. 451
+9. C. Massé, 'Chronique — Arrestation illégale et brutalité policière: dans quelles circonstances la responsabilité des policiers peut-elle être engagée?', Repères, May 2013 (online)
+10. M. Vauclair and T. Desjardins, Traité général de preuve et de procédure pénales (26th ed. 2019)
+11. M. Tancelin, Des obligations en droit mixte du Québec (7th ed. 2009)
+12. N. Vézina, 'Du phénomène de pollution lumineuse appliqué à l'observation des astres jurisprudentiels: responsabilité objective, responsabilité subjective et l'arrêt Ciment du Saint-Laurent', in G. Bras Miranda and B. Moore, eds., Mélanges Adrian Popovici: Les couleurs du droit (2010), 357
+13. M. Lacroix, L'illicéité: Essai théorique et comparatif en matière de responsabilité civile extracontractuelle pour le fait personnel (2013)
+14. M. Lacroix, 'Le fait générateur de responsabilité civile extracontractuelle personnelle: continuum de l'illicéité à la faute simple, au regard de l'article 1457 C.c.Q.' (2012), 46 R.J.T. 25
+15. O. Jobin-Laberge, 'Norme, infraction et faute civile', in Service de la formation permanente — Barreau du Québec, vol. 137, Développements récents en déontologie, droit professionnel et disciplinaire (2000), 31
+16. P. Patenaude, 'De la recevabilité des preuves obtenues au moyen de l'utilisation par la police de techniques modernes d'enquête et de surveillance', in Police, techniques modernes d'enquête ou de surveillance et droit de la preuve (1998), by P. Patenaude, ed.
+17. G. Viney and P. Jourdain, Traité de droit civil: Les conditions de la responsabilité (2nd ed. 1998), by J. Ghestin, ed.
+18. R. Sullivan, Sullivan on the Construction of Statutes (6th ed. 2014)
+19. J. Hétu and Y. Duplessis, with the collaboration of L. Vézina, Droit municipal: Principes généraux et contentieux (2nd ed. (loose-leaf)), vols. 1 and 2
+20. P. Garant, Droit administratif (7th ed. 2017)
+21. G. Régimbald, Canadian Administrative Law (2nd ed. 2015)
+22. P. Ceyssens, Legal Aspects of Policing (loose-leaf), vol. 1
+23. C. Fabien, 'Les règles du mandat', in Extraits du Répertoire de droit (1989)
+24. C. Fabien, 'Mandate', in Reform of the Civil Code, vol. 2-C, Obligations VII, VIII (1993), 2
+25. Code civil du Québec: Annotations — Commentaires 2018-2019 (3rd ed. 2018), by B. Moore, ed., et al.

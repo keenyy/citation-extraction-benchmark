@@ -1,0 +1,124 @@
+Case: 2021-10-14 - R. v. Khill [2021 SCC 37]
+
+## Case Citations
+1. R. v. McIntosh | [1995] 1 S.C.R. 686
+2. Brisson v. The Queen | [1982] 2 S.C.R. 227
+3. R. v. Nelson | (1992), 8 O.R. (3d) 364
+4. R. v. Pintar | (1996), 30 O.R. (3d) 483
+5. R. v. Lavallee | [1990] 1 S.C.R. 852
+6. R. v. Cinous | 2002 SCC 29 | [2002] 2 S.C.R. 3
+7. R. v. Cain | 2011 ONCA 298 | 278 C.C.C. (3d) 228
+8. R. v. Baxter | (1975), 27 C.C.C. (2d) 96
+9. R. v. Hebert | [1996] 2 S.C.R. 272
+10. R. v. Kong (Alberta Court of Appeal) | 2005 ABCA 255 | 53 Alta. L.R. (4th) 25
+11. R. v. Kong (Supreme Court) | 2006 SCC 40 | [2006] 2 S.C.R. 347
+12. R. v. Pétel | [1994] 1 S.C.R. 3
+13. R. v. Parr | 2019 ONCJ 842
+14. R. v. Robertson | 2020 SKCA 8 | 386 C.C.C. (3d) 107
+15. R. v. Bengy | 2015 ONCA 397 | 325 C.C.C. (3d) 22
+16. R. v. Pilon | 2009 ONCA 248 | 243 C.C.C. (3d) 109
+17. R. v. Evans | 2015 BCCA 46 | 321 C.C.C. (3d) 130
+18. R. v. Green | 2015 QCCA 2109 | 337 C.C.C. (3d) 73
+19. R. v. Power | 2016 SKCA 29 | 335 C.C.C. (3d) 317
+20. R. v. Cormier | 2017 NBCA 10 | 348 C.C.C. (3d) 97
+21. R. v. Carriere | 2013 ABQB 645 | 86 Alta L.R. (5th) 219
+22. R. v. Chubbs | 2013 NLCA 60 | 341 Nfld. & P.E.I.R. 346
+23. R. v. Charlebois | 2000 SCC 53 | [2000] 2 S.C.R. 674
+24. R. v. Currie | (2002), 166 C.C.C. (3d) 190
+25. R. v. Sheri | (2004), 185 C.C.C. (3d) 155
+26. R. v. Kagan | 2004 NSCA 77 | 224 N.S.R. (2d) 118
+27. Reilly v. The Queen | [1984] 2 S.C.R. 396
+28. R. v. Phillips | 2017 ONCA 752 | 355 C.C.C. (3d) 141
+29. R. v. Tran | 2010 SCC 58 | [2010] 3 S.C.R. 350
+30. R. v. Billing | 2019 BCCA 237 | 379 C.C.C. (3d) 285
+31. R. v. Robinson | 2019 ABQB 889
+32. R. v. Cunha | 2016 ONCA 491 | 337 C.C.C. (3d) 7
+33. Brunelle v. R. | 2021 QCCA 783
+34. R. v. Craig | 2011 ONCA 142 | 269 C.C.C. (3d) 61
+35. R. v. Gunning | 2005 SCC 27 | [2005] 1 S.C.R. 627
+36. R. v. Szczerbaniwicz | 2010 SCC 15 | [2010] 1 S.C.R. 455
+37. R. v. Zora | 2020 SCC 14
+38. Rizzo & Rizzo Shoes Ltd. (Re) | [1998] 1 S.C.R. 27
+39. R. v. Soltys | (1980), 8 M.V.R. 59
+40. Soerensen v. Sood | (1994), 123 Sask. R. 72
+41. State Farm Mutual Insurance Company v. Economical Mutual Insurance Company | 2018 ONSC 3496 | 80 C.C.L.I. (5th) 283
+42. R. v. Paice | 2005 SCC 22 | [2005] 1 S.C.R. 339
+43. R. v. Lessard | 2018 QCCM 249
+44. R. v. Hibbert | [1995] 2 S.C.R. 973
+45. R. v. Borden | 2017 NSCA 45 | 349 C.C.C. (3d) 162
+46. R. v. Mateo-Asencio | 2018 ONSC 173
+47. R. v. D.L.W. | 2016 SCC 22 | [2016] 1 S.C.R. 402
+48. Canada (Canadian Human Rights Commission) v. Canada (Attorney General) | 2011 SCC 53 | [2011] 3 S.C.R. 471
+49. R. v. Sylvester | 2020 ABQB 27
+50. R. v. Merasty | 2014 SKQB 268 | 454 Sask. R. 49
+51. R. v. Browne | [1973] N.I. 96
+52. R. v. Ameralik | 2021 NUCJ 3 | 69 C.R. (7th) 161
+53. R. v. Rabut | 2015 ABPC 114
+54. R. v. Knott | 2014 MBQB 72 | 304 Man. R. (2d) 226
+55. R. v. Vaz | 2019 QCCQ 7447
+56. R. v. Trotman | 2019 ONCJ 591
+57. R. v. Lewis | 2018 NLSC 191
+58. R. v. S(H) | 2015 ABQB 622
+59. R. v. Fletcher | 2015 CM 1004
+60. R. v. Williams | 2013 BCSC 1774
+61. R. v. Ball | 2013 ABQB 409
+62. R. v. Boyd | (1999), 118 O.A.C. 85
+63. Dubois v. R. | 2010 QCCA 835
+64. Perka v. The Queen | [1984] 2 S.C.R. 232
+65. R. v. Grandin | 2001 BCCA 340 | 95 B.C.L.R. (3d) 78
+66. Re B.C. Motor Vehicle Act | [1985] 2 S.C.R. 486
+67. Placer Dome Canada Ltd. v. Ontario (Minister of Finance) | 2006 SCC 20 | [2006] 1 S.C.R. 715
+68. Canadian National Railway Co. v. Canada (Attorney General) | 2014 SCC 40 | [2014] 2 S.C.R. 135
+69. MediaQMI inc. v. Kamel | 2021 SCC 23 | [2021] 1 S.C.R. 899
+70. R. v. White | 2011 SCC 13 | [2011] 1 S.C.R. 433
+71. R. v. Daley | 2007 SCC 53 | [2007] 3 S.C.R. 523
+72. Azoulay v. The Queen | [1952] 2 S.C.R. 495
+73. R. v. Rodgerson | 2015 SCC 38 | [2015] 2 S.C.R. 760
+74. R. v. A.D.H. | 2013 SCC 28 | [2013] 2 S.C.R. 269
+75. R. v. Barton | 2019 SCC 33 | [2019] 2 S.C.R. 579
+76. R. v. Corbett | [1988] 1 S.C.R. 670
+77. R. v. Sheppard | 2002 SCC 26 | [2002] 1 S.C.R. 869
+78. R. v. Flores | 2011 ONCA 155 | 274 O.A.C. 314
+79. R. v. Levy | 2016 NSCA 45 | 374 N.S.R. (2d) 251
+80. R. v. Calnen | 2019 SCC 6 | [2019] 1 S.C.R. 301
+81. R. v. Graveline | 2006 SCC 16 | [2006] 1 S.C.R. 609
+82. R. v. Jack (Court of Appeal) | (1993), 88 Man. R. (2d) 93
+83. R. v. Jack (Supreme Court) | [1994] 2 S.C.R. 310
+84. Rex v. Stephen | [1944] O.R. 339
+85. R. v. Barreira | 2020 ONCA 218 | 62 C.R. (7th) 101
+86. R. v. Jacquard | [1997] 1 S.C.R. 314
+87. R. v. Jaw | 2009 SCC 42 | [2009] 3 S.C.R. 26
+88. R. v. Khela | 2009 SCC 4 | [2009] 1 S.C.R. 104
+89. R. v. Morin | [1998] 2 S.C.R. 345
+90. R. v. Siu | (1992), 71 C.C.C. (3d) 197
+91. R. v. Lei | (1997), 123 Man. R. (2d) 81
+92. R. v. Finney | (1999), 126 O.A.C. 115
+93. R. v. Ryan | 2013 SCC 3 | [2013] 1 S.C.R. 14
+94. R. v. Rafilovich | 2019 SCC 51
+95. R. v. Sutton | 2000 SCC 50 | [2000] 2 S.C.R. 595
+96. R. v. George | 2017 SCC 38 | [2017] 1 S.C.R. 1021
+97. R. v. J.M.H. | 2011 SCC 45 | [2011] 3 S.C.R. 197
+98. R. v. Luciano | 2011 ONCA 89 | 273 O.A.C. 273
+99. R. v. Walker | 2008 SCC 34 | [2008] 2 S.C.R. 245
+100. R. v. Khill (Court of Appeal) | 2020 ONCA 151 | 149 O.R. (3d) 639 | 60 C.R. (7th) 233 | [2020] O.J. No. 797 (QL) | 2020 CarswellOnt 2479 (WL Can.)
+
+## Academic References
+1. Brudner, Alan, “Constitutionalizing self-defence” (2011), 61 U.T.L.J. 867
+2. Law Reform Commission of Canada, Working Paper 29, Criminal Law — The General Part: Liability and Defences (1982)
+3. Coughlan, Steve, “The Rise and Fall of Duress: How Duress Changed Necessity Before Being Excluded by Self-Defence” (2013), 39 Queen’s L.J. 83
+4. Fehr, Colton, “Self-Defence and the Constitution” (2017), 43 Queen’s L.J. 85
+5. Ferguson, Gerry, “Self-Defence: Selecting the Applicable Provisions” (2000), 5 Can. Crim. L. Rev. 179
+6. Ferzan, Kimberly, “Justification and Excuse”, in John Deigh and David Dolinko, eds., The Oxford Handbook of the Philosophy of the Criminal Law (2011), 239
+7. Fletcher, George P., “The Right and the Reasonable”, in Russell L. Christopher, ed., Fletcher’s Essays on Criminal Law (2013), 150
+8. Muñoz Conde, Francisco, “Putative Self-Defence: A Borderline Case Between Justification and Excuse” (2008), 11 New Crim. L. Rev. 590
+9. Ormerod, David, Smith and Hogan’s Criminal Law (15th ed. 2018); J. C. Smith and B. Hogan, Criminal Law (6th ed. 1988)
+10. Paciocco, David M., “Applying the Law of Self-Defence” (2008), 12 Can. Crim. L. Rev. 25
+11. Paciocco, David M., “The New Defense against Force” (2014), 18 Can. Crim. L. Rev. 269
+12. Parent, Hugues, Traité de droit criminel, t. I, L’imputabilité et les moyens de défense (5e éd. 2019)
+13. Roach, Kent, “A Preliminary Assessment of the New Self-Defence and Defence of Property Provisions” (2012), 16 Can Crim. L. Rev. 275
+14. Stewart, Hamish, “The constitution and the right of self-defence” (2011), 61 U.T.L.J. 899
+15. Stuart, Don, Canadian Criminal Law: A Treatise (2nd ed. 1987)
+16. Sullivan, Ruth, Statutory Interpretation (3rd ed. 2016)
+17. Watt, David, Watt’s Manual of Criminal Jury Instructions (2nd ed. 2015)
+18. Weisbord, Noah, “Who’s Afraid of the Lucky Moose? Canada’s Dangerous Self-Defence Innovation” (2018), 64 McGill L.J. 349
+19. E. Driedger, Construction of Statutes (2nd ed. 1983)

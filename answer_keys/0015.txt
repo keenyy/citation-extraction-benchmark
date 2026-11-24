@@ -1,0 +1,55 @@
+Case: Macleod v Australian Securities and Investments Commission [2002] HCA 37
+
+## Case Citations
+1. Byrnes v The Queen | [1999] HCA 38 | (1999) 199 CLR 1
+2. Bond v The Queen | (2000) 201 CLR 213
+3. Truth About Motorways Pty Ltd v Macquarie Infrastructure Investment Management Ltd | (2000) 200 CLR 591
+4. Australian Securities and Investments Commission v Edensor Nominees Pty Ltd | (2001) 204 CLR 559
+5. R v Murphy | [1985] HCA 50 | (1985) 158 CLR 596
+6. Ah Yick v Lehmert | [1905] HCA 22 | (1905) 2 CLR 593
+7. R v Whitfeld. Ex parte Quon Tat | [1913] HCA 7 | (1913) 15 CLR 689
+8. Austral Pacific Group Ltd (in liquidation) v Airservices Australia | [2000] HCA 39 | (2000) 203 CLR 136
+9. Flaherty v Girgis | [1987] HCA 17 | (1987) 162 CLR 574
+10. Australian Securities Commission v McLeod [sic] | [2000] WASCA 101 | (2000) 22 WAR 255
+11. Northern Territory v GPAO | (1999) 196 CLR 553
+12. Australian Securities and Investment Commission v Hosken | [1999] TASSC 120 | (1999) 9 Tas R 25
+13. Australian Securities and Investments Commission v Vis | (2000) 77 SASR 490
+14. Deputy Commissioner of Taxation v Moorebank Pty Ltd | [1988] HCA 29 | (1988) 165 CLR 55
+15. Davern v Messel | [1984] HCA 34 | (1984) 155 CLR 21
+16. Peel v The Queen | [1971] HCA 59 | (1971) 125 CLR 447
+17. Pearce v The Queen | (1998) 194 CLR 610
+18. DJL v Central Authority | [2000] HCA 17 | (2000) 201 CLR 226
+19. R v Hughes | (2000) 202 CLR 535
+20. Macleod v ASC | [1999] WASCA 35 | (1999) 32 ACSR 172
+21. Bank of NSW v The Commonwealth | [1948] HCA 7 | (1948) 76 CLR 1
+22. Re Wakim; Ex parte McNally | [1999] HCA 27 | (1999) 198 CLR 511
+23. The Commissioner of Police v Tanos | [1958] HCA 6 | (1958) 98 CLR 383
+24. Malvaso v The Queen | [1989] HCA 58 | (1989) 168 CLR 227
+25. Ackroyd v Whitehouse | (1985) 2 NSWLR 239
+26. Booker v SRA of NSW [No 2] | (1993) 31 NSWLR 402
+27. Green v United States | [1804] USSC 11 | 355 US 184
+28. Cooke v Purcell | (1988) 14 NSWLR 51
+29. R v Tait | (1979) 24 ALR 473 | 46 FLR 386
+30. Cullen v The King | [1949] SCR 658
+31. Gould v Brown | (1998) 193 CLR 346
+32. R v Duncan; Ex parte Australian Iron and Steel Pty Ltd | [1983] HCA 29 | (1983) 158 CLR 535
+33. [case name not printed] | [1998] HCA 43 | (1998) 194 CLR 202
+34. Seaegg v The King | [1932] HCA 47 | (1932) 48 CLR 251
+35. Williams v The King [No 2] | [1934] HCA 19 | (1934) 50 CLR 551
+36. Rohde v Director of Public Prosecutions | [1986] HCA 50 | (1986) 161 CLR 119
+
+## Academic References
+1. Saunders, "A New Direction for Intergovernmental Arrangements", (2001) 12 Public Law Review 274
+2. Saunders, "In the Shadow of Re Wakim", (1999) 17 Company and Securities Law Journal 507
+3. Hetherington, "Resolving the Company Law Crisis after the High Court's Decision in The Queen v Hughes", (2000) 28 Australian Business Law Review 364
+4. Riley, "Re Wakim; Ex Parte McNally: Towards an Integrated and Efficient Judicial System", (2000) 18 Company and Securities Law Journal 455
+5. Rose, "The Hughes Case: The Reasoning, Uncertainties and Solutions", (2000) 29 Western Australian Law Review 180
+6. Saunders, "Administrative Law and Relations Between Governments: Australia and Europe Compared", (2000) 28 Federal Law Review 263
+7. Taylor, "From Wakim to Hughes: The current status of corporations and securities regulation and enforcement", (2000) 38 (9) Law Society Journal 50
+8. McConvill and Smith, "Interpretation and Cooperative Federalism: Bond v R from a Constitutional Perspective", [2001] FedLawRw 4; (2001) 29 Federal Law Review 75
+9. De Costa, "The Corporations Law and Cooperative Federalism after The Queen v Hughes", [2000] SydLawRw 21; (2000) 22 Sydney Law Review 451
+10. Kirby, "Constitutional Interpretation and Original Intent - A Form of Ancestor Worship", [2000] MelbULawRw 1; (2000) 24 Melbourne University Law Review 1
+11. Kirk, "Constitutional Interpretation and a Theory of Evolutionary Originalism", (1999) 27 Federal Law Review 323
+12. Claus, "Federalism and the Judges: How the Americans made us what we are", (2000) 74 Australian Law Journal 107
+13. Longo, "Co-operative Federalism in Australia and the European Union: Cross-Pollinating the Green Ideal", [1997] FedLawRw 4; (1997) 25 Federal Law Review 127
+14. Lyon, "R v Hughes: Shuffling the Deck Chairs on the Titanic?", [2001] DeakinLawRw 10; (2001) 6 Deakin Law Review 184
